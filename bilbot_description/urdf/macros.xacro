@@ -1,0 +1,307 @@
+<robot name="bilbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:macro name="cylinder_inertia" params="m r h">
+  <inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+            iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
+            izz="${m*r*r/2}"
+  />
+</xacro:macro>
+
+<xacro:macro name="box_inertia" params="m x y z">
+  <inertia  ixx="${m*(y*y+z*z)/12}" ixy = "0" ixz = "0"
+            iyy="${m*(x*x+z*z)/12}" iyz = "0"
+            izz="${m*(x*x+y*y)/12}"
+  />
+</xacro:macro>
+
+<xacro:macro name="sphere_inertia" params="m r">
+  <inertia  ixx="${2*m*r*r/5}" ixy = "0" ixz = "0"
+            iyy="${2*m*r*r/5}" iyz = "0"
+            izz="${2*m*r*r/5}"
+  />
+</xacro:macro>
+
+<xacro:macro name="wheel" params="lr tY">
+<link name="${lr}_motor">
+  <collision>
+    <origin xyz="0 0 0" rpy="-${PI/2} 0 0" />
+    <geometry>
+      <cylinder length="${motorWidth}" radius="${motorRadius}"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="-${PI/2} 0 0" />
+    <geometry>
+      <cylinder length="${motorWidth}" radius="${motorRadius}"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+  <inertial>
+    <mass value="${wheelMass}"/>
+    <cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelWidth}"/>
+  </inertial>
+</link>
+
+<joint name="base_to_${lr}_motor" type="fixed">
+  <parent link="chassis"/>
+  <child link="${lr}_motor"/>
+  <origin xyz="0 ${tY*((chassisWidth-motorWidth)/2+0.01)} -${motorRadius+chassisHeight/2}" />
+</joint>
+
+<link name="${lr}_wheel">
+  <collision>
+    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <geometry>
+      <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <geometry>
+      <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <mass value="${wheelMass}"/>
+    <cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelWidth}"/>
+  </inertial>
+</link>
+
+<gazebo reference="${lr}_wheel">
+  <mu1 value="200.0"/>
+  <mu2 value="100.0"/>
+  <kp value="10000000.0" />
+  <kd value="1.0" />
+  <fdir1 value="1 0 0"/>
+  <material>Gazebo/Black</material>
+</gazebo>
+
+  <joint name="${lr}_wheel_joint" type="continuous">
+    <axis xyz="0 1 0" rpy="0 0 0" />
+    <parent link="${lr}_motor"/>
+    <child link="${lr}_wheel"/>
+    <origin xyz="0 ${tY*(motorWidth/2+wheelWidth/2)} 0" rpy="0 0 0"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+<transmission name="${lr}_trans">
+  <type>transmission_interface/SimpleTransmission</type>
+  <joint name="${lr}_wheel_joint">
+    <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+  </joint>
+  <actuator name="${lr}Motor">
+    <mechanicalReduction>1</mechanicalReduction>
+  </actuator>
+</transmission>
+</xacro:macro>
+
+<xacro:macro name="caster" params="fb tX">
+
+<joint name="${fb}_caster_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="${fb}_caster_wheel"/>
+  <origin xyz="${tX*chassisLength/3} 0 -${chassisHeight/2}" rpy="0 0 0"/>
+</joint>
+
+<gazebo reference="${fb}_caster_wheel">
+  <mu1>0.0</mu1>
+  <mu2>0.0</mu2>
+  <material>Gazebo/Red</material>
+</gazebo>
+
+<link name="${fb}_caster_wheel">
+  <collision>
+    <origin xyz="0 0 -${casterRadius}" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="${casterRadius}"/>
+    </geometry>
+  </collision>
+  <visual>
+    <origin xyz="0 0 -${casterRadius}" rpy="0 0 0"/>
+    <geometry>
+      <sphere radius="${casterRadius}"/>
+    </geometry>
+  </visual>
+  <inertial>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <mass value="${casterMass}"/>
+    <xacro:sphere_inertia m="${casterMass}" r="${casterRadius}"/>
+  </inertial>
+</link>
+</xacro:macro>
+
+<xacro:macro name="gripper">
+  <joint name="grip_shaft_joint" type="fixed">
+    <parent link="front"/>
+    <child link="grip_shaft"/>
+    <origin xyz="${frontLength/2} 0 ${frontHeight/3}" rpy="0 0 0"/>
+  </joint>
+
+  <link name="grip_shaft">
+    <collision>
+      <origin xyz="${grip_shaftWidth/2} 0 0" rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder length="${grip_shaftWidth}" radius="${grip_shaftRadius}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="${grip_shaftWidth/2} 0 0" rpy="0 ${PI/2} 0"/>
+      <geometry>
+        <cylinder length="${grip_shaftWidth}" radius="${grip_shaftRadius}"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <xacro:cylinder_inertia m="${grip_shaftMass}" h="${grip_shaftWidth}" r="${grip_shaftRadius}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> 
+      <mass value="${grip_shaftMass}"/> 
+    </inertial>
+  </link>
+
+  <joint name="grip_head_joint" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="50.0" lower="0.0" upper="${PI/2}" velocity="0.5"/>
+    <origin xyz="${grip_shaftWidth+grip_headLength/2} 0 0" rpy="0 0 0"/>
+    <parent link="grip_shaft"/>
+    <child link="grip_head"/>
+    <dynamics damping="0.0" friction="0.0"/>
+  </joint>
+  <transmission name="lift_gripper_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="lift_gripper_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="grip_head_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <link name="grip_head">
+    <collision>
+      <origin xyz="0 0 0" rpy="0  0 ${PI/2}"/>
+      <geometry>
+        <box size="${grip_headWidth} ${grip_headLength} ${grip_headHeight}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
+      <geometry>
+        <box size="${grip_headWidth} ${grip_headLength} ${grip_headHeight}"/>
+      </geometry>
+    </visual>
+    <inertial>
+      <xacro:box_inertia m="${grip_headMass}" x="${grip_headLength}" y="${grip_headWidth}" z="${grip_headHeight}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> 
+      <mass value="${grip_headMass}"/> 
+    </inertial>
+  </link>
+
+  <joint name="left_finger_joint" type="prismatic">
+    <parent link="grip_head"/>
+    <child link="left_finger"/>
+    <limit effort="50" lower="0" upper="${grip_headWidth/2-fingerWidth}" velocity="0.2"/>
+    <origin rpy="0 0 -${PI/2}" xyz="${grip_headLength/2} ${grip_headWidth/2-fingerWidth/2} 0"/>
+    <!-- <axis xyz="0 -1 0"/> -->
+  </joint>
+
+  <transmission name="left_finger_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="left_finger_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="left_finger_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <link name="left_finger">
+    <collision>
+      <geometry>
+        <box size="${fingerWidth} ${fingerLength} ${fingerHeight}"/>
+      </geometry>
+      <origin xyz="0 ${fingerLength/2} 0" rpy="0 0 0"/>
+    </collision>
+    <visual>
+      <geometry>
+        <box size="${fingerWidth} ${fingerLength} ${fingerHeight}"/>
+      </geometry>
+      <origin xyz="0 ${fingerLength/2} 0" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <xacro:box_inertia m="${fingerMass}" x="${fingerLength}" y="${fingerWidth}" z="${fingerHeight}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> 
+      <mass value="${fingerMass}"/> 
+    </inertial>
+  </link>
+
+  <joint name="right_finger_joint" type="prismatic">
+    <parent link="grip_head"/>
+    <child link="right_finger"/>
+    <limit effort="50" lower="0" upper="${grip_headWidth/2-fingerWidth}" velocity="0.2"/>
+    <origin rpy="0 0 ${PI/2}" xyz="${grip_headLength/2} -${grip_headWidth/2-fingerWidth/2} 0"/>
+    <!-- <axis xyz="0 -1 0"/> -->
+  </joint>
+
+  <transmission name="right_finger_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="right_finger_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="right_finger_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
+  <link name="right_finger">
+    <collision>
+      <geometry>
+        <box size="${fingerWidth} ${fingerLength} ${fingerHeight}"/>
+      </geometry>
+      <origin xyz="0 -${fingerLength/2} 0" rpy="0 0 0"/>
+    </collision>
+    <visual>
+      <geometry>
+        <box size="${fingerWidth} ${fingerLength} ${fingerHeight}"/>
+      </geometry>
+      <origin xyz="0 -${fingerLength/2} 0" rpy="0 0 0"/>
+    </visual>
+    <inertial>
+      <xacro:box_inertia m="${fingerMass}" x="${fingerLength}" y="${fingerWidth}" z="${fingerHeight}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> 
+      <mass value="${fingerMass}"/> 
+    </inertial>
+  </link>
+
+</xacro:macro>
+
+<xacro:macro name="support" params="fb lr tX tY">
+  <joint name="base_to_${fb}_${lr}_support" type="fixed">
+    <parent link="chassis"/>
+    <child link="${fb}_${lr}_support"/>
+    <origin xyz="${tX*supportX} ${tY*supportY} ${chassisHeight/2}"/>
+  </joint>
+
+  <link name="${fb}_${lr}_support">
+    <collision>
+      <origin xyz="0 0 ${supportHeight/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${supportWidth} ${supportLength} ${supportHeight}"/>
+      </geometry>
+    </collision>
+    <visual>
+      <origin xyz="0 0 ${supportHeight/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${supportWidth} ${supportLength} ${supportHeight}"/>
+      </geometry>
+      <material name="grey"/>
+    </visual>
+    <inertial>
+      <xacro:box_inertia m="${supportMass}" x="${supportLength}" y="${supportWidth}" z="${supportHeight}"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/> 
+      <mass value="${supportMass}"/> 
+    </inertial>
+  </link>
+</xacro:macro>
+</robot>

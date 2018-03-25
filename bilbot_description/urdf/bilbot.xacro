@@ -1,0 +1,249 @@
+<?xml version="1.0"?>
+<robot name="bilbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:include filename="$(find bilbot_description)/urdf/bilbot.gazebo" />
+ 	<xacro:include filename="$(find bilbot_description)/urdf/materials.xacro" />
+ 	<xacro:include filename="$(find bilbot_description)/urdf/macros.xacro" />
+	<xacro:property name="PI" value="3.1415926535897931"/>
+
+	<xacro:property name="chassisHeight" value="0.01"/>
+	<xacro:property name="chassisLength" value="0.2"/>
+	<xacro:property name="chassisWidth" value="0.15"/>
+	<xacro:property name="chassisMass" value="5"/>
+
+	<xacro:property name="layerHeight" value="0.01"/>
+	<xacro:property name="layerLength" value="0.18"/>
+	<xacro:property name="layerWidth" value="0.075"/>
+	<xacro:property name="layerMass" value="4"/>
+
+	<xacro:property name="batteryHeight" value="0.027"/>
+	<xacro:property name="batteryLength" value="0.114"/>
+	<xacro:property name="batteryWidth" value="0.056"/>
+	<xacro:property name="batteryMass" value="0.423"/>
+	<xacro:property name="batteryOffset" value="-0.03"/>
+
+	<xacro:property name="casterRadius" value="0.025"/>
+	<xacro:property name="casterMass" value="5"/>
+
+	<xacro:property name="wheelWidth" value="0.01"/>
+	<xacro:property name="wheelRadius" value="0.04"/>
+	<xacro:property name="wheelPos" value="0.2"/>
+	<xacro:property name="wheelMass" value="5"/>
+
+	<xacro:property name="frontWidth" value="0.15"/>
+	<xacro:property name="frontLength" value="0.01"/>
+	<xacro:property name="frontHeight" value="0.075"/>
+	<xacro:property name="frontMass" value="1"/>
+
+	<xacro:property name="motorWidth" value="0.07"/>
+	<xacro:property name="motorRadius" value="0.0125"/>
+	<xacro:property name="motorMass" value="0.104"/>
+
+	<xacro:property name="cameraSize" value="0.05"/>
+	<xacro:property name="cameraMass" value="0.1"/>
+
+	<xacro:property name="supportWidth" value="0.005"/>
+	<xacro:property name="supportHeight" value="0.03"/>
+	<xacro:property name="supportLength" value="0.005"/>
+	<xacro:property name="supportMass" value="0.1"/>
+
+	<xacro:property name="raspberrypiWidth" value="0.06"/>
+	<xacro:property name="raspberrypiHeight" value="0.01"/>
+	<xacro:property name="raspberrypiLength" value="0.04"/>
+	<xacro:property name="raspberrypiMass" value="0.1"/>
+
+	<xacro:property name="pcbWidth" value="0.04"/>
+	<xacro:property name="pcbHeight" value="0.01"/>
+	<xacro:property name="pcbLength" value="0.04"/>
+	<xacro:property name="pcbMass" value="0.1"/>
+
+	<xacro:property name="grip_shaftWidth" value="0.04"/>
+	<xacro:property name="grip_shaftRadius" value="0.005"/>
+	<xacro:property name="grip_shaftMass" value="0.104"/>
+
+	<xacro:property name="grip_headWidth" value="0.06"/>
+	<xacro:property name="grip_headHeight" value="0.01"/>
+	<xacro:property name="grip_headLength" value="0.02"/>
+	<xacro:property name="grip_headMass" value="0.1"/>
+
+	<xacro:property name="supportX" value="0.06"/>
+	<xacro:property name="supportY" value="0.035"/>
+
+  <xacro:property name="fingerHeight" value="0.01"/>
+  <xacro:property name="fingerLength" value="0.03"/>
+  <xacro:property name="fingerWidth" value="0.01"/>
+  <xacro:property name="fingerMass" value="0.5"/>
+
+<link name="base_link" />
+
+<joint name="base_joint" type="fixed">
+  <parent link="base_link"/>
+  <child link="chassis"/>
+</joint>
+
+<link name="chassis">
+  <collision> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${chassisLength} ${chassisWidth} ${chassisHeight}"/> 
+    </geometry> 
+    <material name="orange"/>
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${chassisMass}"/> 
+    <xacro:box_inertia m="${chassisMass}" x="${chassisLength}" y="${chassisWidth}" z="${chassisHeight}"/>
+  </inertial>
+</link>
+
+<joint name="battery_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="battery"/>
+  <origin xyz="${batteryOffset} 0 ${chassisHeight/2}" rpy="0 0 0"/>
+</joint>
+
+<link name="battery">
+  <collision> 
+    <origin xyz="0 0 ${batteryHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${batteryHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/> 
+    </geometry> 
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${batteryMass}"/> 
+    <xacro:box_inertia m="${batteryMass}" x="${batteryLength}" y="${batteryWidth}" z="${batteryHeight}"/>
+  </inertial>
+</link>
+
+<joint name="layer_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="layer"/>
+  <origin xyz="0 0 ${chassisHeight/2+supportHeight}" rpy="0 0 0"/>
+</joint>
+
+<link name="layer">
+  <collision> 
+    <origin xyz="0 0 ${layerHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${layerLength} ${layerWidth} ${layerHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${layerHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${layerLength} ${layerWidth} ${layerHeight}"/> 
+    </geometry> 
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${layerMass}"/> 
+    <xacro:box_inertia m="${layerMass}" x="${layerLength}" y="${layerWidth}" z="${layerHeight}"/>
+  </inertial>
+</link>
+
+<joint name="front_joint" type="fixed">
+  <parent link="chassis"/>
+  <child link="front"/>
+  <origin xyz="${chassisLength/2-frontLength/2} 0 ${chassisHeight/2}" rpy="0 0 0"/>
+</joint>
+
+<link name="front">
+  <collision> 
+    <origin xyz="0 0 ${frontHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${frontLength} ${frontWidth} ${frontHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${frontHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${frontLength} ${frontWidth} ${frontHeight}"/> 
+    </geometry> 
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${frontMass}"/> 
+    <xacro:box_inertia m="${frontMass}" x="${frontLength}" y="${frontWidth}" z="${frontHeight}"/>
+  </inertial>
+</link>
+
+<joint name="raspberrypi_joint" type="fixed">
+  <parent link="layer"/>
+  <child link="raspberrypi"/>
+  <origin xyz="${layerLength/4} 0 ${layerHeight}" rpy="0 0 0"/>
+</joint>
+
+<link name="raspberrypi">
+  <collision> 
+    <origin xyz="0 0 ${raspberrypiHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${raspberrypiLength} ${raspberrypiWidth} ${raspberrypiHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${raspberrypiHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${raspberrypiLength} ${raspberrypiWidth} ${raspberrypiHeight}"/> 
+    </geometry> 
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${raspberrypiMass}"/> 
+    <xacro:box_inertia m="${raspberrypiMass}" x="${raspberrypiLength}" y="${raspberrypiWidth}" z="${raspberrypiHeight}"/>
+  </inertial>
+</link>
+
+<joint name="pcb_joint" type="fixed">
+  <parent link="layer"/>
+  <child link="pcb"/>
+  <origin xyz="-${layerLength/4} 0 ${layerHeight}" rpy="0 0 0"/>
+</joint>
+
+<link name="pcb">
+  <collision> 
+    <origin xyz="0 0 ${pcbHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${pcbLength} ${pcbWidth} ${pcbHeight}"/> 
+    </geometry> 
+  </collision>
+  <visual> 
+    <origin xyz="0 0 ${pcbHeight/2}" rpy="0 0 0"/> 
+    <geometry> 
+      <box size="${pcbLength} ${pcbWidth} ${pcbHeight}"/> 
+    </geometry> 
+  </visual>
+  <inertial> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+    <mass value="${pcbMass}"/> 
+    <xacro:box_inertia m="${pcbMass}" x="${pcbLength}" y="${pcbWidth}" z="${pcbHeight}"/>
+  </inertial>
+</link>
+
+
+<xacro:caster fb="front" tX="1"/>
+<xacro:caster fb="back" tX="-1"/>
+
+
+<xacro:wheel lr="right" tY="1"/>
+<xacro:wheel lr="left" tY="-1"/>
+
+<xacro:gripper/>
+
+<xacro:support lr="left" fb="front" tY="1" tX="1"/>
+<xacro:support lr="right" fb="front" tY="-1" tX="1"/>
+<xacro:support lr="left" fb="back" tY="1" tX="-1"/>
+<xacro:support lr="right" fb="back" tY="-1" tX="-1"/>
+
+</robot>

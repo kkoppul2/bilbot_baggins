@@ -1,0 +1,44 @@
+<robot name="bilbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<gazebo reference="chassis">
+  		<material>Gazebo/Orange</material>
+	</gazebo>
+	<gazebo reference="raspberrypi">
+  		<material>Gazebo/Green</material>
+	</gazebo>
+	<gazebo reference="pcb">
+  		<material>Gazebo/Green</material>
+	</gazebo>
+	<gazebo reference="battery">
+  		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+	<gazebo reference="grip_shaft">
+  		<material>Gazebo/SkyBlue</material>
+	</gazebo>
+	<gazebo reference="grip_head">
+  		<material>Gazebo/DarkGrey</material>
+	</gazebo>
+	<gazebo>
+  		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    		<robotNamespace>/bilbot</robotNamespace>
+  		</plugin>
+	</gazebo>
+	<gazebo>
+  		<plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+    		<rosDebugLevel>na</rosDebugLevel>
+    		<alwaysOn>true</alwaysOn>
+    		<updateRate>50</updateRate>
+    		<leftJoint>left_wheel_joint</leftJoint>
+    		<rightJoint>right_wheel_joint</rightJoint>
+    		<wheelSeparation>0.18</wheelSeparation>
+    		<wheelDiameter>0.08</wheelDiameter>
+    		<torque>50</torque>
+    		<commandTopic>/bilbot/cmd_vel</commandTopic>
+    		<odometryTopic>/bilbot/odom_diffdrive</odometryTopic>
+    		<odometryFrame>odom</odometryFrame>
+    		<robotBaseFrame>base_link</robotBaseFrame>
+    		<wheelAcceleration>2.8</wheelAcceleration>
+    		<odometrySource>world</odometrySource>
+    		<legacyMode>false</legacyMode>
+		</plugin>
+	</gazebo>
+</robot>

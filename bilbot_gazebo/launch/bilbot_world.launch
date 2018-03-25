@@ -1,0 +1,54 @@
+<launch>
+	<arg name="model" default="$(find bilbot_description)/urdf/bilbot.xacro"/>
+	<arg name="paused" default="false"/>
+  	<arg name="use_sim_time" default="true"/>
+  	<arg name="gui" default="true"/>
+  	<arg name="debug" default="false"/>
+  	<arg name="rvizconfig" default="$(find bilbot_description)/rviz/urdf.rviz" />
+
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">	    
+		<arg name="world_name" value="$(find bilbot_gazebo)/worlds/bilbot.world"/>	    
+		<arg name="debug" value="$(arg debug)" />
+    	<arg name="gui" value="$(arg gui)" />
+    	<arg name="paused" value="$(arg paused)"/>
+    	<arg name="use_sim_time" value="$(arg use_sim_time)"/>  
+	</include>	
+
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)"/>
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" />
+
+	<node name="controller_spawner"
+    pkg="controller_manager"
+    type="spawner" respawn="false"
+    output="screen" ns="/bilbot"
+    args="joint_state_controller
+    	  gripper_controller"
+          
+  	/>
+
+  	<rosparam command="load"
+            file="$(find bilbot_control)/config/joints.yaml"
+            ns="/bilbot/joint_state_controller" />
+
+    <rosparam command="load"
+            file="$(find bilbot_control)/config/gripper.yaml"
+            ns="/bilbot/gripper_controller" />
+
+  	<rosparam command="load"
+            file="$(find bilbot_control)/config/diff_drive.yaml"
+            ns="/bilbot/diff_drive_controller" />
+
+  	<node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
+    	<param name="default_topic" value="/bilbot/cmd_vel"/>
+  	</node>
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+    	<param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bilbot_description)/urdf/bilbot.xacro'" />
+    	<remap from="/joint_states" to="/bilbot/joint_states" />
+  	</node>
+
+	
+
+	<node name="bilbot_spawn" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-z 0.1 -unpause -urdf -model bilbot -param robot_description"/>
+</launch>

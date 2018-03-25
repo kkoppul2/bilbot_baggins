@@ -1,0 +1,8 @@
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+
+  <!-- load the controllers -->
+  
+
+</launch>
