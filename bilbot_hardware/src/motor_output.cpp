@@ -1,6 +1,8 @@
 #include "ros/ros.h"
 #include <pigpio.h>
 #include "bilbot_hardware/motor_controller.hpp"
+#include "bilbot_msgs/Drive"
+#include "sensor_msgs/JointState.h"
 
 using namespace bilbot_hardware;
 
@@ -18,14 +20,15 @@ int main(int argc, char **argv) {
 	n.param("pinB", pinB, 24);
 	n.param("side", side, 0);
 
-	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, motor_controller::commandCallback);
+	motor_controller mc(side, pinA, pinB, 1.0, 0.0, 0.0);
 
-	ros::Subscriber curr = n.subscribe(curr_topic, 10, motor_controller::stateCallback);
+	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, &motor_controller::commandCallback, &mc);
+
+	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
 
 	//Initialize pigpio library
 	if (gpioInitialise() < 0) return 1;
 	//Create motor controller class;
-	motor_controller m(side, pinA, pinB, 1.0, 0.0, 0.0);
 
 	float motor_u;
 
@@ -33,14 +36,14 @@ int main(int argc, char **argv) {
 
 	while(ros::ok()) {
 		//Calculate current error
-		m.set_error();
+		mc.set_error();
 
 		//Calculate Integral and Derivative values of error signal 
-		m.filter_velocity();
-		m.estimate_integral();
+		mc.filter_velocity();
+		mc.estimate_integral();
 		
 		//Calculate Motor control signal
-		motor_u = m.control();
+		motor_u = mc.control();
 
 		//Gpio output 
 		if (motor_u >= 0)

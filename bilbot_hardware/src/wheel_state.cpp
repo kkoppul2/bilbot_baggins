@@ -17,7 +17,7 @@ void callback(int way)
 
 int main(int argc, char *argv[])
 {
-	ros::init(argc, argv, "wheel_state")
+	ros::init(argc, argv, "wheel_state");
 
 	ros::NodeHandle n;
 

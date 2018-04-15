@@ -25,6 +25,14 @@ void motor_controller::set_error() {
 	error_old_ = error_;
 }
 
+void motor_controller::set_wheel_cmd(float wheel_cmd) {
+	wheel_cmd_ = wheel_cmd;
+}
+
+void motor_controller::set_wheel_vel(float wheel_vel) {
+	wheel_vel_ = wheel_vel;
+}
+
 void motor_controller::filter_velocity() {
 	err_d_ = (error_ - error_old_)/0.01;
 	err_d_ = (err_d_ + err_d_old1_ + err_d_old2_)/3;
@@ -62,11 +70,11 @@ float motor_controller::control() {
 }
 
 void motor_controller::commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel) {
-	wheel_cmd_ = cmd_vel->drivers[side_];
+	set_wheel_cmd(cmd_vel->drivers[side_]);
 }
 
 void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
-	wheel_vel_ = curr_vel->velocity[side_];
+	set_wheel_vel(wheel_vel_ = curr_vel->velocity[side_]);
 }
 
 }
