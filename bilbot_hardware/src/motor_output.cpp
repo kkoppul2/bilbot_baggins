@@ -1,7 +1,6 @@
 #include "ros/ros.h"
 #include <pigpio.h>
 #include "bilbot_hardware/motor_controller.hpp"
-#include "bilbot_msgs/Drive"
 #include "sensor_msgs/JointState.h"
 
 using namespace bilbot_hardware;

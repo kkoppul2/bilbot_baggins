@@ -37,6 +37,7 @@ private:
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
 
 	void set_wheel_cmd(float wheel_cmd);
+	void set_wheel_vel(float wheel_vel);
 
 public:
 	motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki);
