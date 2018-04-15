@@ -11,13 +11,13 @@ int main(int argc, char **argv) {
 	ros::NodeHandle n;
 
 	std::string cmd_topic, curr_topic;
-	n.param("command_topic", cmd_topic, "wheel_vel/right");
-	n.param("state_topic", curr_topic, "wheel_state/right");
+	n.getParam("command_topic", cmd_topic);
+	n.getParam("state_topic", curr_topic);
 
 	int pinA, pinB, side;
-	n.param("pinA", pinA, 23);
-	n.param("pinB", pinB, 24);
-	n.param("side", side, 0);
+	n.getParam("pinA", pinA);
+	n.getParam("pinB", pinB);
+	n.getParam("side", side);
 
 	motor_controller mc(side, pinA, pinB, 1.0, 0.0, 0.0);
 
