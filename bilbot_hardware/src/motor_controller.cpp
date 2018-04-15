@@ -41,7 +41,7 @@ void motor_controller::estimate_integral() {
 
 float motor_controller::control() {
 	float u = kp_*error_ + kd_*err_d_;
-	if (fabs(err_p) < integral_threshold) {
+	if (fabs(error_ < integral_threshold)) {
 		estimate_integral();
 		u = u +ki_*err_i_;
 	} else {

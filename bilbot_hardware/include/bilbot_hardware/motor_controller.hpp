@@ -18,15 +18,17 @@ private:
 
 	//Integral Variables
 	float err_i_, err_i_old_;
+	float integral_threshold;
 
 	//Gpio pins
 	int gpioA, gpioB;
+
 
 	void filter_velocity();
 	void estimate_integral();
 
 public:
-	motor_controller(float kp, float kd, float ki);
+	motor_controller(int gpioA, int gpioB, float kp, float kd, float ki);
 	~motor_controller();
 	void set_error(float err);
 	float control();
