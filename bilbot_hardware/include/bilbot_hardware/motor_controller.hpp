@@ -36,6 +36,8 @@ private:
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
 
+	void set_wheel_cmd(float wheel_cmd);
+
 public:
 	motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki);
 	~motor_controller();
