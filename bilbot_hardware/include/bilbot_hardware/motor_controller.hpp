@@ -27,14 +27,9 @@ private:
 	//Gpio pins
 	int gpioA, gpioB;
 
-	int side_;
-
-	void filter_velocity();
-	void estimate_integral();
-
 	float wheel_cmd_, wheel_vel_;
-	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
-	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
+
+	int side_;
 
 	void set_wheel_cmd(float wheel_cmd);
 	void set_wheel_vel(float wheel_vel);
@@ -42,6 +37,13 @@ private:
 public:
 	motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki);
 	~motor_controller();
+	
+	void filter_velocity();
+	void estimate_integral();
+
+	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
+	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
+
 	void set_error();
 	float control();
 };
