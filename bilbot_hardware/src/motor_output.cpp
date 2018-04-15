@@ -2,7 +2,7 @@
 #include "geometry_msgs/Twist.h"
 #include "motor_controller.hpp"
 #include <pigpio.h>
-#include "motor_controller.hpp"
+#include "bilbot_hardware/motor_controller.hpp"
 
 using namespace bilbot_hardware;
 
@@ -30,13 +30,12 @@ int main(int argc, char **argv) {
 	motor_controller m(side, pinA, pinB, 1.0, 0.0, 0.0);
 
 	float motor_u;
-	float  wheel_cmd, wheel_vel;
 
 	ros::Rate loop(100);
 
 	while(ros::ok()) {
 		//Calculate current error
-		m.set_error(wheel_cmd - wheel_vel);
+		m.set_error();
 
 		//Calculate Integral and Derivative values of error signal 
 		m.filter_velocity();

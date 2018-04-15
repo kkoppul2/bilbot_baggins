@@ -1,4 +1,5 @@
 #include "bilbot_hardware/motor_controller.hpp"
+#include <pigpio.h>
 
 namespace bilbot_hardware {
 
@@ -8,8 +9,8 @@ motor_controller::motor_controller(bool side, int gpioA, int gpioB, float kp, fl
 	gpioSetMode(gpioA, PI_OUTPUT);
 	gpioSetMode(gpioA, PI_OUTPUT);
 
-	gpioSetPUllUpDown(gpioA, PI_PUD_DOWN);
-	gpioSetPUllUpDown(gpioB, PI_PUD_DOWN);
+	gpioSetPullUpDown(gpioA, PI_PUD_DOWN);
+	gpioSetPullUpDown(gpioB, PI_PUD_DOWN);
 
 	gpioSetPWMFrequency(gpioA, 50000);
 	gpioSetPWMFrequency(gpioB, 50000);
@@ -19,8 +20,8 @@ motor_controller::~motor_controller() {
 
 }
 
-void motor_controller::set_error(float err) {
-	error_ = err;
+void motor_controller::set_error() {
+	error_ = wheel_cmd - wheel_vel;
 	error_old_ = error_;
 }
 
@@ -60,12 +61,12 @@ float motor_controller::control() {
 	return u; 
 }
 
-void motor_controller::commandCallback(const geometry_msgs::Twist::ConstPtr& cmd_vel) {
-	wheel_cmd = cmd_vel-drivers[side_];
+void motor_controller::commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel) {
+	wheel_cmd_ = cmd_vel-drivers[side_];
 }
 
 void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
-	wheel_vel = curr_vel->velocity[side_];
+	wheel_vel_ = curr_vel->velocity[side_];
 }
 
 }

@@ -5,6 +5,7 @@
 #include <pigpio.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
+#include "sensor_msgs/JointState.h"
 
 namespace bilbot_hardware {
 
@@ -31,13 +32,14 @@ private:
 	void filter_velocity();
 	void estimate_integral();
 
+	float wheel_cmd_, wheel_vel_;
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
 
 public:
 	motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki);
 	~motor_controller();
-	void set_error(float err);
+	void set_error();
 	float control();
 };
 
