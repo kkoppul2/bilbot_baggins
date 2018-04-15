@@ -1,0 +1,21 @@
+<launch>
+
+	<node pkg="bilbot_drive" type="wheel_state" name="right_wheel" respawn="true">
+		<remap from="wheel_state" to="wheel_state/right"/>
+	</node>
+
+	<node pkg="bilbot_drive" type="wheel_state" name="left_wheel" respawn="true">
+		<remap from="wheel_state" to="wheel_state/left"/>
+	</node>
+
+	<node pkg="bilbot_drive" type="motor_output" name="right_motor" respawn="true">
+		<param name="command_topic" value="cmd_drive" />
+		<param name="state_topic" value="wheel_state/right" />
+	</node>
+
+	<node pkg="bilbot_drive" type="motor_output" name="left_motor" respawn="true">
+		<param name="command_topic" value="cmd_drive" />
+		<param name="state_topic" value="wheel_state/left" />
+	</node>
+
+</launch>

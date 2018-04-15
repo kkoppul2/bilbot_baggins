@@ -50,7 +50,7 @@ private:
   joints_[2];
 
   // This pointer is set from the ROS thread.
-  jackal_msgs::Feedback::ConstPtr feedback_msg_;
+  sensor_msgs::JointState::ConstPtr feedback_msg_;
   boost::mutex feedback_msg_mutex_;
 };
 

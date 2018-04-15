@@ -1,24 +1,13 @@
 <launch>
 
-	<include file="$(find jackal_description)/launch/description.launch" />
-	<include file="$(find jackal_control)/launch/control.launch" />
+	<include file="$(find bilbot_description)/launch/description.launch" />
+	<include file="$(find bilbot_control)/launch/control.launch" />
+	<include file="$(find bilbot_hardware)/launch/hardware.launch"
 
-	<node pkg="bilbot_drive" type="wheel_state" name="right_wheel" respawn="true">
-		<remap from="wheel_state" to="wheel_state/right"/>
+	<node pkg="bilbot_drive" type="bilbot_base" name="hardware interface" respawn="true" >
+		<param?
 	</node>
 
-	<node pkg="bilbot_drive" type="wheel_state" name="left_wheel" respawn="true">
-		<remap from="wheel_state" to="wheel_state/left"/>
-	</node>
 
-	<node pkg="bilbot_drive" type="motor_output" name="right_motor" respawn="true">
-		<param name="command_topic" value="wheel_vel/right" />
-		<param name="state_topic" value="wheel_state/right" />
-	</node>
-
-	<node pkg="bilbot_drive" type="motor_output" name="left_motor" respawn="true">
-		<param name="command_topic" value="wheel_vel/left" />
-		<param name="state_topic" value="wheel_state/left" />
-	</node>
 
 </launch>

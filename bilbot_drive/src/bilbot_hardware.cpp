@@ -41,8 +41,8 @@ void BilbotHardware::copyJointsFromHardware()
   {
     for (int i = 0; i <2; i++)
     {
-      joints_[i].position = feedback_msg_->drivers[i % 2].measured_travel;
-      joints_[i].velocity = feedback_msg_->drivers[i % 2].measured_velocity;
+      joints_[i].position = feedback_msg_->position[i];
+      joints_[i].velocity = feedback_msg_->velocity[i];
       joints_[i].effort = 0;  // TODO(mikepurvis): determine this from amperage data.
     }
   }
@@ -68,15 +68,19 @@ void BilbotHardware::rightCallback(const sensor_msgs::JointState::ConstPtr& msg)
   // Update the feedback message pointer to point to the current message. Block
   // until the control thread is not using the lock.
   boost::mutex::scoped_lock lock(feedback_msg_mutex_);
-  feedback_msg_ = msg;
+  feedback_msg_.position[0] = msg.position[0];
+  feedback_msg_.velocity[0] = msg.velocity[0];
+  feedback_msg_.effort[0] = msg.effort[0];
 }
 
-void BilbotHardware::rightCallback(const sensor_msgs::JointState::ConstPtr& msg)
+void BilbotHardware::leftCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
   // Update the feedback message pointer to point to the current message. Block
   // until the control thread is not using the lock.
   boost::mutex::scoped_lock lock(feedback_msg_mutex_);
-  feedback_msg_ = msg;
+  feedback_msg_.position[1] = msg.position[0];
+  feedback_msg_.velocity[1] = msg.velocity[0];
+  feedback_msg_.effort[1] = msg.effort[0];
 }
 
 } // namespace bilbot_hardware

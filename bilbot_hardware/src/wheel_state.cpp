@@ -54,9 +54,9 @@ int main(int argc, char *argv[])
 		velocity_old1 = velocity;
 
 		//Publish position and velocity to JointState message
-		wheel.position = position;
-		wheel.velocity = velocity;
-		wheel.effort = 0.0;
+		wheel.position[0] = position;
+		wheel.velocity[0] = velocity;
+		wheel.effort[0] = 0.0;
 
 		wheel_state.publish(wheel);
 
