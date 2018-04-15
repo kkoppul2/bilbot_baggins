@@ -2,8 +2,8 @@
 
 namespace bilbot_hardware {
 
-motor_controller::motor_controller(int gpioA, int gpioB, float kp, float kd, float ki) 
-	: kp_(kp), kd_(kd), ki_(ki)
+motor_controller::motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki) 
+	: kp_(kp), kd_(kd), ki_(ki), side_(side)
 {
 	gpioSetMode(gpioA, PI_OUTPUT);
 	gpioSetMode(gpioA, PI_OUTPUT);
@@ -61,11 +61,11 @@ float motor_controller::control() {
 }
 
 void motor_controller::commandCallback(const geometry_msgs::Twist::ConstPtr& cmd_vel) {
-	wheel_cmd = cmd_vel->angular.z;
+	wheel_cmd = cmd_vel-drivers[side_];
 }
 
 void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
-	wheel_vel = curr_vel-velocity;
+	wheel_vel = curr_vel->velocity[side_];
 }
 
 }

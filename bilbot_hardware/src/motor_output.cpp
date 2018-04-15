@@ -15,9 +15,10 @@ int main(int argc, char **argv) {
 	n.param("command_topic", cmd_topic, "wheel_vel/right");
 	n.param("state_topic", curr_topic, "wheel_state/right");
 
-	int pinA, pinB;
+	int pinA, pinB, side;
 	n.param("pinA", pinA, 23);
 	n.param("pinB", pinB, 24);
+	n.param("side", side, 0);
 
 	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, motor_controller::commandCallback);
 
@@ -26,7 +27,7 @@ int main(int argc, char **argv) {
 	//Initialize pigpio library
 	if (gpioInitialise() < 0) return 1;
 	//Create motor controller class;
-	motor_controller m(pinA, pinB, 1.0, 0.0, 0.0);
+	motor_controller m(side, pinA, pinB, 1.0, 0.0, 0.0);
 
 	float motor_u;
 	float  wheel_cmd, wheel_vel;
