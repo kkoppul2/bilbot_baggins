@@ -33,10 +33,12 @@ target_link_libraries(rotary_encoder_node ${catkin_LIBRARIES} ${Boost_LIBRARIES}
 add_dependencies(rotary_encoder_node bilbot_msgs_gencpp)
 
 install(TARGETS motor_controller_node rotary_encoder_node
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 install(DIRECTORY launch 
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 roslaunch_add_file_check(launch/hardware.launch)
 roslint_cpp()
