@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(bilbot_hardware)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -15,6 +15,32 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
 )
+
+find_package(Boost REQUIRED COMPONENTS thread chrono)
+
+include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+
+add_executable(motor_controller_node
+  src/motor_output.cpp
+  src/motor_controller.cpp)
+target_link_libraries(motor_controller_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(motor_controller_node bilbot_msgs_gencpp)
+
+add_executable(rotary_encoder_node
+  src/wheel_state.cpp
+  src/rotary_encoder.cpp)
+target_link_libraries(rotary_encoder_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(rotary_encoder_node bilbot_msgs_gencpp)
+
+install(TARGETS motor_controller_node rotary_encoder_node
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(DIRECTORY launch 
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+roslaunch_add_file_check(launch/hardware.launch)
+roslint_cpp()
+roslint_add_test()
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -105,12 +131,12 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
+# catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES bilbot_hardware
 #  CATKIN_DEPENDS geometry_msgs roscpp rospy sensor_msgs std_msgs tf
 #  DEPENDS system_lib
-)
+# )
 
 ###########
 ## Build ##
@@ -118,10 +144,10 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
+# include_directories(
 # include
-  ${catkin_INCLUDE_DIRS}
-)
+  # ${catkin_INCLUDE_DIRS}
+# )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}

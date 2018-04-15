@@ -3,7 +3,7 @@
 
 #include "math.h"
 
-namespace bilbot_drive {
+namespace bilbot_hardware {
 
 class motor_controller
 {

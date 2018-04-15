@@ -110,21 +110,21 @@
   </inertial>
 </link>
 
-<!-- <joint name="battery_joint" type="fixed">
+<joint name="battery_joint" type="fixed">
   <parent link="chassis"/>
   <child link="battery"/>
-  <origin xyz="${batteryOffset} 0 ${chassisHeight/2}" rpy="0 0 0"/>
+  <origin xyz="0 0 ${chassisHeight/2 + batteryHeight/2}" rpy="0 0 0"/>
 </joint>
 
 <link name="battery">
   <collision> 
-    <origin xyz="0 0 ${batteryHeight/2}" rpy="0 0 0"/> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
     <geometry> 
       <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/> 
     </geometry> 
   </collision>
   <visual> 
-    <origin xyz="0 0 ${batteryHeight/2}" rpy="0 0 0"/> 
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
     <geometry> 
       <box size="${batteryLength} ${batteryWidth} ${batteryHeight}"/> 
     </geometry> 
@@ -188,7 +188,7 @@
   </inertial>
 </link>
 
-<joint name="raspberrypi_joint" type="fixed">
+<!-- <joint name="raspberrypi_joint" type="fixed">
   <parent link="layer"/>
   <child link="raspberrypi"/>
   <origin xyz="${layerLength/4} 0 ${layerHeight}" rpy="0 0 0"/>
@@ -248,12 +248,12 @@
 <xacro:wheel lr="right" tY="1"/>
 <xacro:wheel lr="left" tY="-1"/>
 
-<!-- <xacro:gripper/>
+<!-- <xacro:gripper/> -->
 
-<xacro:support lr="left" fb="front" tY="1" tX="1"/>
+<!-- <xacro:support lr="left" fb="front" tY="1" tX="1"/>
 <xacro:support lr="right" fb="front" tY="-1" tX="1"/>
 <xacro:support lr="left" fb="back" tY="1" tX="-1"/>
-<xacro:support lr="right" fb="back" tY="-1" tX="-1"/>
+<xacro:support lr="right" fb="back" tY="-1" tX="-1"/> -->
 
  <joint name="camera_joint" type="fixed">
   <parent link="front"/>
@@ -372,6 +372,6 @@
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <box_inertia m="${laserMass}" x="${laserWidth}" y="${laserLength}" z="${laserHeight}" />
     </inertial>
-  </link> -->
+  </link>
 
 </robot>

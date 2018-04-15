@@ -1,11 +1,11 @@
 #include <pigpio.h>
 #include <unistd.h>
 
-#include "../include/rotary_encoder.hpp"
+#include "bilbot_hardware/rotary_encoder.hpp"
 #include "ros/ros.h"
 #include "sensor_msgs/JointState.h"
 
-using namespace bilbot_drive;
+using namespace bilbot_hardware;
 
 void callback(int way)
 {

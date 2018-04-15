@@ -69,13 +69,13 @@
   </inertial>
 </link>
 
-<!-- <gazebo reference="${lr}_wheel">
+<gazebo reference="${lr}_wheel">
   <mu1 value="1.0"/>
   <mu2 value="1.0"/>
   <kp value="100000.0" />
   <kd value="1.0" />
   <material>Gazebo/Black</material>
-</gazebo>  -->
+</gazebo> 
 
   <joint name="${lr}_wheel_joint" type="continuous">
     <axis xyz="0 1 0" rpy="0 0 0" />

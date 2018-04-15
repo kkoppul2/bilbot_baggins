@@ -2,7 +2,7 @@
 
 #include <pigpio.h>
 
-#include "../include/rotary_encoder.hpp"
+#include "bilbot_hardware/rotary_encoder.hpp"
 
 /*
 
@@ -20,7 +20,7 @@
 
 */
 
-namespace bilbot_drive {
+namespace bilbot_hardware {
 
 void re_decoder::_pulse(int gpio, int level, uint32_t tick)
 {

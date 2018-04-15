@@ -1,6 +1,6 @@
-#include "../include/motor_controller.hpp"
+#include "bilbot_hardware/motor_controller.hpp"
 
-namespace bilbot_drive {
+namespace bilbot_hardware {
 
 motor_controller::motor_controller(int gpioA, int gpioB, float kp, float kd, float ki) 
 	: kp_(kp), kd_(kd), ki_(ki)
@@ -13,11 +13,11 @@ motor_controller::motor_controller(int gpioA, int gpioB, float kp, float kd, flo
 
 	gpioSetPWMFrequency(gpioA, 50000);
 	gpioSetPWMFrequency(gpioB, 50000);
-};
+}
 
 motor_controller::~motor_controller() {
 
-};
+}
 
 void motor_controller::set_error(float err) {
 	error_ = err;
@@ -31,13 +31,13 @@ void motor_controller::filter_velocity() {
 	err_d_old2_ = err_d_old1_;
 	err_d_old1_ = err_d_;
 
-};
+}
 
 void motor_controller::estimate_integral() {
 	err_i_ = err_i_old_ + (error_ + error_old_)/2*0.01;
 	err_i_old_ = err_i_;
 
-};
+}
 
 float motor_controller::control() {
 	float u = kp_*error_ + kd_*err_d_;
@@ -58,6 +58,6 @@ float motor_controller::control() {
 	}
 
 	return u; 
-};
+}
 
 }

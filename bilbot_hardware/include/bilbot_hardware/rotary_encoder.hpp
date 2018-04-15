@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-namespace bilbot_drive {
+namespace bilbot_hardware {
 
 typedef void (*re_decoderCB_t)(int);
 

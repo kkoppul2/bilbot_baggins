@@ -13,7 +13,7 @@
 #include "sensor_msgs/JointState.h"
 
 
-namespace bilbot_hardware
+namespace bilbot_drive
 {
 
 class BilbotHardware : public hardware_interface::RobotHW
@@ -24,12 +24,10 @@ public:
   void publishDriveFromController();
 
 private:
-  void rightCallback(const sensor_msgs::JointState::ConstPtr& right);
-  void leftCallback(const sensor_msgs::JointState::ConstPtr& left);
+  void feedbackCallback(const sensor_msgs::JointState::ConstPtr& right);
 
   ros::NodeHandle nh_;
-  ros::Subscriber feedback_right_;
-  ros::Subscriber feedback_left_;
+  ros::Subscriber feedback_sub_;
   realtime_tools::RealtimePublisher<bilbot_msgs::Drive> cmd_drive_pub_;
 
   hardware_interface::JointStateInterface joint_state_interface_;

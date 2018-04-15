@@ -1,7 +1,8 @@
 #include <boost/assign.hpp>
-#include "jackal_base/jackal_hardware.h"
+#include "bilbot_drive/bilbot_hardware.hpp"
+#include "ros/ros.h"
 
-namespace bilbot_hardware
+namespace bilbot_drive
 {
 
 BilbotHardware::BilbotHardware()
@@ -21,8 +22,7 @@ BilbotHardware::BilbotHardware()
   registerInterface(&joint_state_interface_);
   registerInterface(&velocity_joint_interface_);
 
-  feedback_right_ = nh_.subscribe("wheel_state/right", 1, &BilbotHardware::rightCallback, this);
-  feedback_right_ = nh_.subscribe("wheel_state/right", 1, &BilbotHardware::rightCallback, this);
+  feedback_sub_ = nh_.subscribe("wheel_state/combined", 1, &BilbotHardware::feedbackCallback, this);
 
   // Realtime publisher, initializes differently from regular ros::Publisher
   cmd_drive_pub_.init(nh_, "cmd_drive", 1);
@@ -43,7 +43,7 @@ void BilbotHardware::copyJointsFromHardware()
     {
       joints_[i].position = feedback_msg_->position[i];
       joints_[i].velocity = feedback_msg_->velocity[i];
-      joints_[i].effort = 0;  // TODO(mikepurvis): determine this from amperage data.
+      joints_[i].effort = 0; 
     }
   }
 }
@@ -57,30 +57,19 @@ void BilbotHardware::publishDriveFromController()
 {
   if (cmd_drive_pub_.trylock())
   {
-    cmd_drive_pub_.msg_.right_cmd = joints_[0].velocity_command;
-    cmd_drive_pub_.msg_.left_cmd = joints_[1].velocity_command;
+    cmd_drive_pub_.msg_.drivers[0] = joints_[0].velocity_command;
+    cmd_drive_pub_.msg_.drivers[1] = joints_[1].velocity_command;
     cmd_drive_pub_.unlockAndPublish();
   }
 }
 
-void BilbotHardware::rightCallback(const sensor_msgs::JointState::ConstPtr& msg)
+void BilbotHardware::feedbackCallback(const sensor_msgs::JointState::ConstPtr& msg)
 {
   // Update the feedback message pointer to point to the current message. Block
   // until the control thread is not using the lock.
   boost::mutex::scoped_lock lock(feedback_msg_mutex_);
-  feedback_msg_.position[0] = msg.position[0];
-  feedback_msg_.velocity[0] = msg.velocity[0];
-  feedback_msg_.effort[0] = msg.effort[0];
+  feedback_msg_ = msg;
 }
 
-void BilbotHardware::leftCallback(const sensor_msgs::JointState::ConstPtr& msg)
-{
-  // Update the feedback message pointer to point to the current message. Block
-  // until the control thread is not using the lock.
-  boost::mutex::scoped_lock lock(feedback_msg_mutex_);
-  feedback_msg_.position[1] = msg.position[0];
-  feedback_msg_.velocity[1] = msg.velocity[0];
-  feedback_msg_.effort[1] = msg.effort[0];
-}
 
 } // namespace bilbot_hardware

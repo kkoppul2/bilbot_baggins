@@ -3,12 +3,12 @@
 #include <boost/chrono.hpp>
 
 #include "controller_manager/controller_manager.h"
-#include "bilbot_hardware.h"
+#include "bilbot_drive/bilbot_hardware.hpp"
 #include "ros/ros.h"
 
 typedef boost::chrono::steady_clock time_source;
 
-void controlThread(ros::Rate rate, bilbot_hardware::BilbotHardware* robot, controller_manager::ControllerManager* cm)
+void controlThread(ros::Rate rate, bilbot_drive::BilbotHardware* robot, controller_manager::ControllerManager* cm)
 {
   time_source::time_point last_time = time_source::now();
 
@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
 {
   // Initialize ROS node.
   ros::init(argc, argv, "bilbot_node");
-  bilbot_hardware::BilbotHardware bilbot;
+  bilbot_drive::BilbotHardware bilbot;
 
   // Background thread for the controls callback.
   ros::NodeHandle controller_nh("");

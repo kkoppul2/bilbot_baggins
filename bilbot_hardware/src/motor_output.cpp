@@ -3,7 +3,7 @@
 
 #include <pigpio.h>
 
-using namespace bilbot_drive;
+using namespace bilbot_hardware;
 
 void commandCallback(const geometry_msgs::Twist::ConstPtr& cmd_vel) {
 	wheel_cmd = cmd_vel.angular.z;
