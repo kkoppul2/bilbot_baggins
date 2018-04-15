@@ -1,4 +1,5 @@
 #include "bilbot_hardware/motor_controller.hpp"
+#include <pigpio>
 
 namespace bilbot_hardware {
 
@@ -45,7 +46,7 @@ float motor_controller::control() {
 		estimate_integral();
 		u = u +ki_*err_i_;
 	} else {
-		err_i = 0;
+		err_i_ = 0;
 		err_i_old_ = 0;
 	}
 
@@ -58,6 +59,14 @@ float motor_controller::control() {
 	}
 
 	return u; 
+}
+
+void motor_controller::commandCallback(const geometry_msgs::Twist::ConstPtr& cmd_vel) {
+	wheel_cmd = cmd_vel->angular.z;
+}
+
+void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
+	wheel_vel = curr_vel-velocity;
 }
 
 }

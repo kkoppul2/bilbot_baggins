@@ -1,17 +1,9 @@
 #include "ros/ros.h"
 #include "geometry_msgs/Twist.h"
-
+#include "motor_controller.hpp"
 #include <pigpio.h>
 
 using namespace bilbot_hardware;
-
-void commandCallback(const geometry_msgs::Twist::ConstPtr& cmd_vel) {
-	wheel_cmd = cmd_vel.angular.z;
-}
-
-void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
-	wheel_vel = curr_vel.velocity;
-}
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "motor_output");
@@ -26,9 +18,9 @@ int main(int argc, char **argv) {
 	n.param("pinA", pinA, 23);
 	n.param("pinB", pinB, 24);
 
-	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, commandCallback);
+	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, motor_controller::commandCallback);
 
-	ros::Subscriber curr = n.subscribe(curr_topic, 10, stateCallback);
+	ros::Subscriber curr = n.subscribe(curr_topic, 10, motor_controller::stateCallback);
 
 	//Initialize pigpio library
 	if (gpioInitialise() < 0) return 1;
