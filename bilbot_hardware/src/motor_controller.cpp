@@ -12,8 +12,8 @@ motor_controller::motor_controller(bool side, int gpioA, int gpioB, float kp, fl
 	gpioSetPullUpDown(gpioA, PI_PUD_DOWN);
 	gpioSetPullUpDown(gpioB, PI_PUD_DOWN);
 
-	gpioSetPWMFrequency(gpioA, 50000);
-	gpioSetPWMFrequency(gpioB, 50000);
+	gpioSetPWMfrequency(gpioA, 50000);
+	gpioSetPWMfrequency(gpioB, 50000);
 }
 
 motor_controller::~motor_controller() {
@@ -21,7 +21,7 @@ motor_controller::~motor_controller() {
 }
 
 void motor_controller::set_error() {
-	error_ = wheel_cmd - wheel_vel;
+	error_ = wheel_cmd_ - wheel_vel_;
 	error_old_ = error_;
 }
 
@@ -62,7 +62,7 @@ float motor_controller::control() {
 }
 
 void motor_controller::commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel) {
-	wheel_cmd_ = cmd_vel-drivers[side_];
+	wheel_cmd_ = cmd_vel->drivers[side_];
 }
 
 void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel) {
