@@ -5,56 +5,55 @@
  	<xacro:include filename="$(find bilbot_description)/urdf/macros.xacro" />
 	<xacro:property name="PI" value="3.1415926535897931"/>
 
-	<xacro:property name="chassisHeight" value="0.01"/>
-	<xacro:property name="chassisLength" value="0.2"/>
-	<xacro:property name="chassisWidth" value="0.15"/>
+	<xacro:property name="chassisHeight" value="0.005"/>
+	<xacro:property name="chassisLength" value="0.185"/>
+	<xacro:property name="chassisWidth" value="0.16"/>
 	<xacro:property name="chassisMass" value="5"/>
 
-	<xacro:property name="layerHeight" value="0.01"/>
-	<xacro:property name="layerLength" value="0.18"/>
-	<xacro:property name="layerWidth" value="0.075"/>
-	<xacro:property name="layerMass" value="4"/>
+	<xacro:property name="layerHeight" value="0.005"/>
+	<xacro:property name="layerLength" value="0.165"/>
+	<xacro:property name="layerWidth" value="0.07"/>
+	<xacro:property name="layerMass" value=".6"/>
 
 	<xacro:property name="batteryHeight" value="0.027"/>
 	<xacro:property name="batteryLength" value="0.114"/>
 	<xacro:property name="batteryWidth" value="0.056"/>
-	<xacro:property name="batteryMass" value="0.423"/>
+	<xacro:property name="batteryMass" value="2"/>
 	<xacro:property name="batteryOffset" value="-0.03"/>
 
-	<xacro:property name="casterRadius" value="0.025"/>
-	<xacro:property name="casterMass" value="5"/>
+	<xacro:property name="casterRadius" value="0.024"/>
+	<xacro:property name="casterMass" value="2"/>
 
-	<xacro:property name="wheelWidth" value="0.01"/>
-	<xacro:property name="wheelRadius" value="0.04"/>
+  <xacro:property name="wheelSeparation" value="0.1875"/>
+  <xacro:property name="wheelVerticalOffset" value="0.018"/>
+	<xacro:property name="wheelWidth" value="0.008"/>
+	<xacro:property name="wheelRadius" value="0.035"/>
 	<xacro:property name="wheelPos" value="0.2"/>
-	<xacro:property name="wheelMass" value="5"/>
+	<xacro:property name="wheelMass" value="0.2"/>
 
-	<xacro:property name="frontWidth" value="0.15"/>
-	<xacro:property name="frontLength" value="0.01"/>
-	<xacro:property name="frontHeight" value="0.075"/>
+	<xacro:property name="frontWidth" value="0.16"/>
+	<xacro:property name="frontLength" value="0.02"/>
+	<xacro:property name="frontHeight" value="0.1"/>
 	<xacro:property name="frontMass" value="1"/>
 
 	<xacro:property name="motorWidth" value="0.07"/>
 	<xacro:property name="motorRadius" value="0.0125"/>
 	<xacro:property name="motorMass" value="0.104"/>
 
-	<xacro:property name="cameraSize" value="0.05"/>
-	<xacro:property name="cameraMass" value="0.1"/>
-
 	<xacro:property name="supportWidth" value="0.005"/>
-	<xacro:property name="supportHeight" value="0.03"/>
+	<xacro:property name="supportHeight" value="0.035"/>
 	<xacro:property name="supportLength" value="0.005"/>
-	<xacro:property name="supportMass" value="0.1"/>
+	<xacro:property name="supportMass" value="0.01"/>
 
 	<xacro:property name="raspberrypiWidth" value="0.06"/>
 	<xacro:property name="raspberrypiHeight" value="0.01"/>
 	<xacro:property name="raspberrypiLength" value="0.04"/>
-	<xacro:property name="raspberrypiMass" value="0.1"/>
+	<xacro:property name="raspberrypiMass" value="0.05"/>
 
 	<xacro:property name="pcbWidth" value="0.04"/>
 	<xacro:property name="pcbHeight" value="0.01"/>
 	<xacro:property name="pcbLength" value="0.04"/>
-	<xacro:property name="pcbMass" value="0.1"/>
+	<xacro:property name="pcbMass" value="0.05"/>
 
 	<xacro:property name="grip_shaftWidth" value="0.04"/>
 	<xacro:property name="grip_shaftRadius" value="0.005"/>
@@ -72,6 +71,16 @@
   <xacro:property name="fingerLength" value="0.03"/>
   <xacro:property name="fingerWidth" value="0.01"/>
   <xacro:property name="fingerMass" value="0.5"/>
+
+  <xacro:property name="cameraWidth" value="0.01"/>
+  <xacro:property name="cameraHeight" value="0.02"/>
+  <xacro:property name="cameraLength" value="0.02"/>
+  <xacro:property name="cameraMass" value="0.1"/>
+
+  <xacro:property name="laserWidth" value="0.01"/>
+  <xacro:property name="laserHeight" value="0.01"/>
+  <xacro:property name="laserLength" value="0.01"/>
+  <xacro:property name="laserMass" value="0.01"/>
 
 <link name="base_link" />
 
@@ -101,7 +110,7 @@
   </inertial>
 </link>
 
-<joint name="battery_joint" type="fixed">
+<!-- <joint name="battery_joint" type="fixed">
   <parent link="chassis"/>
   <child link="battery"/>
   <origin xyz="${batteryOffset} 0 ${chassisHeight/2}" rpy="0 0 0"/>
@@ -229,7 +238,7 @@
     <mass value="${pcbMass}"/> 
     <xacro:box_inertia m="${pcbMass}" x="${pcbLength}" y="${pcbWidth}" z="${pcbHeight}"/>
   </inertial>
-</link>
+</link> -->
 
 
 <xacro:caster fb="front" tX="1"/>
@@ -239,11 +248,130 @@
 <xacro:wheel lr="right" tY="1"/>
 <xacro:wheel lr="left" tY="-1"/>
 
-<xacro:gripper/>
+<!-- <xacro:gripper/>
 
 <xacro:support lr="left" fb="front" tY="1" tX="1"/>
 <xacro:support lr="right" fb="front" tY="-1" tX="1"/>
 <xacro:support lr="left" fb="back" tY="1" tX="-1"/>
 <xacro:support lr="right" fb="back" tY="-1" tX="-1"/>
+
+ <joint name="camera_joint" type="fixed">
+  <parent link="front"/>
+  <child link="camera"/>
+  <origin xyz="0 0 ${frontHeight}" rpy="0 0 0"/>
+</joint>
+
+<link name="camera">
+  <collision>
+    <origin xyz="0 0 ${cameraHeight/2}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${cameraWidth} ${cameraLength} ${cameraHeight}"/>
+    </geometry>
+  </collision>
+
+  <visual>
+    <origin xyz="0 0 ${cameraHeight/2}" rpy="0 0 0"/>
+    <geometry>
+      <box size="${cameraWidth} ${cameraLength} ${cameraHeight}"/>
+    </geometry>
+    <material name="blue"/>
+  </visual>
+
+  <inertial>
+    <mass value="${cameraMass}" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <box_inertia m="${cameraMass}" x="${cameraWidth}" y="${cameraLength}" z="${cameraHeight}" />
+  </inertial>
+</link>
+
+ <joint name="laser1_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.029 0 0.0825" rpy="0 0 0"/>
+    <parent link="front"/>
+    <child link="laser1"/>
+  </joint>
+
+
+  <link name="laser1">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="${laserMass}" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <box_inertia m="${laserMass}" x="${laserWidth}" y="${laserLength}" z="${laserHeight}" />
+    </inertial>
+  </link>
+
+  <joint name="laser2_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.029 0.05 0.0825" rpy="0 0 0.261799"/>
+    <parent link="front"/>
+    <child link="laser2"/>
+  </joint>
+
+
+  <link name="laser2">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="${laserMass}" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <box_inertia m="${laserMass}" x="${laserWidth}" y="${laserLength}" z="${laserHeight}" />
+    </inertial>
+  </link>
+
+  <joint name="laser3_joint" type="fixed">
+    <axis xyz="0 0 0" />
+    <origin xyz="0.029 -0.05 0.0825" rpy="0 0 -0.261799"/>
+    <parent link="front"/>
+    <child link="laser3"/>
+  </joint>
+
+
+  <link name="laser3">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+    <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${laserWidth} ${laserLength} ${laserHeight}"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="${laserMass}" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <box_inertia m="${laserMass}" x="${laserWidth}" y="${laserLength}" z="${laserHeight}" />
+    </inertial>
+  </link> -->
 
 </robot>

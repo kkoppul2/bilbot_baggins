@@ -1,5 +1,0 @@
-type: "position_controllers/JointGroupPositionController"
-joints:
- - grip_head_joint
- - left_finger_joint
- - right_finger_joint

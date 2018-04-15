@@ -1,18 +1,23 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(bilbot_description)
+project(bilbot_drive)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roslaunch)
-
-
+find_package(catkin REQUIRED COMPONENTS
+  geometry_msgs
+  sensor_msgs
+  nav_msgs
+  rospy
+  roscpp
+  tf
+)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS assign system thread chrono)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -68,7 +73,7 @@ find_package(catkin REQUIRED COMPONENTS roslaunch)
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
+#   geometry_msgs#   nav_msgs
 # )
 
 ################################################
@@ -101,16 +106,10 @@ find_package(catkin REQUIRED COMPONENTS roslaunch)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES bilbot_description
-#  CATKIN_DEPENDS other_catkin_pkg
+  INCLUDE_DIRS include
+#  LIBRARIES bilbot_drive
+#  CATKIN_DEPENDS geometry_msgs nav_msgs rospy tf
 #  DEPENDS system_lib
-)
-
-roslaunch_add_file_check(launch/description.launch)
-
-install(DIRECTORY meshes launch urdf
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 ###########
@@ -119,15 +118,15 @@ install(DIRECTORY meshes launch urdf
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(
-# include
-# ${catkin_INCLUDE_DIRS}
-# )
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/bilbot_description.cpp
-# )
+ add_library(${PROJECT_NAME}
+   src/rotary_encoder.cpp
+)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -137,7 +136,7 @@ install(DIRECTORY meshes launch urdf
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/bilbot_description_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/bilbot_drive_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -183,18 +182,18 @@ install(DIRECTORY meshes launch urdf
 # )
 
 ## Mark other files for installation (e.g. launch and bag files, etc.)
-install(FILES
-  launch/description.launch
-  # myfile2
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
 
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_bilbot_description.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_bilbot_drive.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

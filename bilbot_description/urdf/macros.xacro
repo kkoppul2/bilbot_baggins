@@ -2,8 +2,8 @@
 
 <xacro:macro name="cylinder_inertia" params="m r h">
   <inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
-            iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
-            izz="${m*r*r/2}"
+            iyy="${m*r*r/2}" iyz = "0"
+            izz="${m*(3*r*r+h*h)/12}"
   />
 </xacro:macro>
 
@@ -24,13 +24,13 @@
 <xacro:macro name="wheel" params="lr tY">
 <link name="${lr}_motor">
   <collision>
-    <origin xyz="0 0 0" rpy="-${PI/2} 0 0" />
+    <origin xyz="0 0 0" rpy="${tY*PI/2} 0 0" />
     <geometry>
       <cylinder length="${motorWidth}" radius="${motorRadius}"/>
     </geometry>
   </collision>
   <visual>
-    <origin xyz="0 0 0" rpy="-${PI/2} 0 0" />
+    <origin xyz="0 0 0" rpy="${tY*PI/2} 0 0" />
     <geometry>
       <cylinder length="${motorWidth}" radius="${motorRadius}"/>
     </geometry>
@@ -45,46 +45,45 @@
 <joint name="base_to_${lr}_motor" type="fixed">
   <parent link="chassis"/>
   <child link="${lr}_motor"/>
-  <origin xyz="0 ${tY*((chassisWidth-motorWidth)/2+0.01)} -${motorRadius+chassisHeight/2}" />
+  <origin xyz="0 ${tY*(wheelSeparation-motorWidth-wheelWidth)/2} -${wheelVerticalOffset}" />
 </joint>
 
 <link name="${lr}_wheel">
   <collision>
-    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <origin xyz="0 0 0" rpy="${tY*PI/2} 0 0" />
     <geometry>
       <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
     </geometry>
   </collision>
   <visual>
-    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <origin xyz="0 0 0" rpy="${tY*PI/2} 0 0" />
     <geometry>
       <cylinder length="${wheelWidth}" radius="${wheelRadius}"/>
     </geometry>
     <material name="black"/>
   </visual>
   <inertial>
-    <origin xyz="0 0 0" rpy="0 ${PI/2} ${PI/2}" />
+    <origin xyz="0 0 0" rpy="${tY*PI/2} 0 0" />
     <mass value="${wheelMass}"/>
     <cylinder_inertia m="${wheelMass}" r="${wheelRadius}" h="${wheelWidth}"/>
   </inertial>
 </link>
 
-<gazebo reference="${lr}_wheel">
-  <mu1 value="200.0"/>
-  <mu2 value="100.0"/>
-  <kp value="10000000.0" />
+<!-- <gazebo reference="${lr}_wheel">
+  <mu1 value="1.0"/>
+  <mu2 value="1.0"/>
+  <kp value="100000.0" />
   <kd value="1.0" />
-  <fdir1 value="1 0 0"/>
   <material>Gazebo/Black</material>
-</gazebo>
+</gazebo>  -->
 
   <joint name="${lr}_wheel_joint" type="continuous">
     <axis xyz="0 1 0" rpy="0 0 0" />
     <parent link="${lr}_motor"/>
     <child link="${lr}_wheel"/>
     <origin xyz="0 ${tY*(motorWidth/2+wheelWidth/2)} 0" rpy="0 0 0"/>
-    <limit effort="100" velocity="100"/>
-    <joint_properties damping="0.0" friction="0.0"/>
+    <!--<limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>-->
   </joint>
 
 <transmission name="${lr}_trans">
@@ -92,7 +91,7 @@
   <joint name="${lr}_wheel_joint">
     <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
   </joint>
-  <actuator name="${lr}Motor">
+  <actuator name="${lr}_motor">
     <mechanicalReduction>1</mechanicalReduction>
   </actuator>
 </transmission>

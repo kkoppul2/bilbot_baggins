@@ -1,0 +1,8 @@
+<launch>
+
+	<rosparam command="load" file="$(find bilbot_control)/config/control.yaml" />
+
+	<node name="controller_spawner" pkg="controller_manager" type="spawner"
+args="bilbot_joint_publisher bilbot_diff_controller" />
+
+</launch>
