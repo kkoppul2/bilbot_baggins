@@ -2,6 +2,7 @@
 #define MOTOR_CONTROLLER_H
 
 #include "math.h"
+#include <pigpio.h>
 
 namespace bilbot_hardware {
 

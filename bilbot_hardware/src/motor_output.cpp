@@ -2,6 +2,7 @@
 #include "geometry_msgs/Twist.h"
 #include "motor_controller.hpp"
 #include <pigpio.h>
+#include "motor_controller.hpp"
 
 using namespace bilbot_hardware;
 
