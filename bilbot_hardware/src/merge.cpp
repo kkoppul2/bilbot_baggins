@@ -31,13 +31,13 @@ int main(int argc, char **argv) {
 	while (ros::ok()) {
 		sensor_msgs::JointState merged_message;
 		ROS_INFO("Outside of loop");
-		merged_message.position[0] = m.right_wheel.position[0];
-		merged_message.velocity[0] = m.right_wheel.velocity[0];
-		merged_message.effort[0] = m.right_wheel.effort[0];
+		merged_message.position[0] = right_wheel.position[0];
+		merged_message.velocity[0] = right_wheel.velocity[0];
+		merged_message.effort[0] = right_wheel.effort[0];
 
-		merged_message.position[1] = m.left_wheel.position[0];
-		merged_message.velocity[1] = m.left_wheel.velocity[0];
-		merged_message.effort[1] = m.left_wheel.effort[0];
+		merged_message.position[1] = left_wheel.position[0];
+		merged_message.velocity[1] = left_wheel.velocity[0];
+		merged_message.effort[1] = left_wheel.effort[0];
 
 		merged.publish(merged_message);
 
