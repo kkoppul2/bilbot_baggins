@@ -16,17 +16,7 @@ public:
 	void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg);
 };
 
-void merger::rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
-	right_wheel.position[0] = rmsg->position[0];
-	right_wheel.velocity[0] = rmsg->velocity[0];
-	right_wheel.effort[0] = 0.0;
-}
 
-void merger::leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
-	left_wheel.position[0] = lmsg->position[0];
-	left_wheel.velocity[0] = lmsg->velocity[0];
-	left_wheel.effort[0] = 0.0;
-}
 }
 
 #endif
