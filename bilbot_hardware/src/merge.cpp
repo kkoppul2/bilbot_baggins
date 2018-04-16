@@ -6,13 +6,13 @@
 sensor_msgs::JointState right_wheel, left_wheel;
 
 void rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
-	right_wheel.position[0] = rmsg->position[0];
-	right_wheel.velocity[0] = rmsg->velocity[0];
+	right_wheel.position = rmsg->position;
+	right_wheel.velocity = rmsg->velocity;
 }
 
 void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
-	left_wheel.position[0] = lmsg->position[0];
-	left_wheel.velocity[0] = lmsg->velocity[0];
+	left_wheel.position = lmsg->position;
+	left_wheel.velocity = lmsg->velocity;
 }
 
 int main(int argc, char **argv) {
@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
 
 		ROS_INFO("Inside of loop-1");
 		merged_message.name = {"right_wheel_joint", "left_wheel_joint"};
-		merged_message.position = {right_wheel.position[0], left_wheel.position[0]};
-		merged_message.velocity = {right_wheel.velocity[0], left_wheel.velocity[0]};
+		// merged_message.position = {right_wheel.position[0], left_wheel.position[0]};
+		// merged_message.velocity = {right_wheel.velocity[0], left_wheel.velocity[0]};
 		ROS_INFO("Inside of loop-2");
 		merged.publish(merged_message);
 
