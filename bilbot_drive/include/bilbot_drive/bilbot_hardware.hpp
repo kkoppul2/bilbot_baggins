@@ -45,6 +45,7 @@ private:
     {
     }
   }
+  
   joints_[2];
 
   // This pointer is set from the ROS thread.

@@ -7,14 +7,6 @@
 
 using namespace bilbot_hardware;
 
-void callback(int way)
-{
-   static float pos = 0;
-
-   pos += way;
-
-}
-
 int main(int argc, char *argv[])
 {
 	ros::init(argc, argv, "wheel_state");
@@ -29,33 +21,18 @@ int main(int argc, char *argv[])
 
 	ros::Rate loop(100);
 
-	float position, position_old, velocity, velocity_old1, velocity_old2; //Variables used to implement IIR filter
-
-	float resolution = 0.1308997; //Angular resolution per encoder tick
-
 	if (gpioInitialise() < 0) return 1;
 
-	re_decoder dec(pinA, pinB, callback);
+	re_decoder dec(pinA, pinB, &re_decoder::positionCallback);
 
 	while (ros::ok()){
 		sensor_msgs::JointState wheel;
 		wheel.header.stamp = ros::Time::now();
 		wheel.header.frame_id = "/world";
 
-		//Take position reading from encoder and find angular position
-		position = pos*resolution;
-
-		//IIR filter on velocity
-		velocity = (position - position_old)/0.01;
-		velocity = (velocity + velocity_old1 + velocity_old2)/3.0;
-
-		position_old = position;
-		velocity_old2 = velocity_old1;
-		velocity_old1 = velocity;
-
 		//Publish position and velocity to JointState message
-		wheel.position[0] = position;
-		wheel.velocity[0] = velocity;
+		wheel.position[0] = dec.getPosition();
+		wheel.velocity[0] = dec.getVelocity();
 		wheel.effort[0] = 0.0;
 
 		wheel_state.publish(wheel);
