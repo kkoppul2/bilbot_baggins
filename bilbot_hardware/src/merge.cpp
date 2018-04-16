@@ -21,13 +21,13 @@ int main(int argc, char **argv) {
 	while (ros::ok()) {
 		sensor_msgs::JointState merged_message;
 
-		merged_message.position[0] = m.right.position[0];
-		merged_message.velocity[0] = m.right.velocity[0];
-		merged_message.effort[0] = m.right.effort[0];
+		merged_message.position[0] = m.right_wheel.position[0];
+		merged_message.velocity[0] = m.right_wheel.velocity[0];
+		merged_message.effort[0] = m.right_wheel.effort[0];
 
-		merged_message.position[1] = m.left.position[0];
-		merged_message.velocity[1] = m.left.velocity[0];
-		merged_message.effort[1] = m.left.effort[0];
+		merged_message.position[1] = m.left_wheel.position[0];
+		merged_message.velocity[1] = m.left_wheel.velocity[0];
+		merged_message.effort[1] = m.left_wheel.effort[0];
 
 		merged.publish(merged_message);
 
