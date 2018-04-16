@@ -30,14 +30,18 @@ int main(int argc, char **argv) {
 	ROS_INFO("Outside of loop");
 	while (ros::ok()) {
 		sensor_msgs::JointState merged_message;
+		merged_message.header.stamp = ros::Time::now();
+		merged_message.header.frame_id = "/world";
 		ROS_INFO("Inside of loop-1");
-		merged_message.position[0] = right_wheel.position[0];
-		merged_message.velocity[0] = right_wheel.velocity[0];
-		merged_message.effort[0] = right_wheel.effort[0];
+		merged_message.name[0] = "right_wheel_joint"
+		merged_message.position[0] = right_wheel.position;
+		merged_message.velocity[0] = right_wheel.velocity;
+		merged_message.effort[0] = right_wheel.effort;
 		ROS_INFO("Inside of loop-2");
-		merged_message.position[1] = left_wheel.position[0];
-		merged_message.velocity[1] = left_wheel.velocity[0];
-		merged_message.effort[1] = left_wheel.effort[0];
+		merged_message.name[1] = "left_wheel_joint"
+		merged_message.position[1] = left_wheel.position;
+		merged_message.velocity[1] = left_wheel.velocity;
+		merged_message.effort[1] = left_wheel.effort;
 		ROS_INFO("Inside of loop-3");
 		merged.publish(merged_message);
 
