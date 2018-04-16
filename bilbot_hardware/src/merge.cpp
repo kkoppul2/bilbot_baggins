@@ -21,29 +21,29 @@ int main(int argc, char **argv) {
 
 	ros::NodeHandle n;
 
-	ros::Subscriber right = n.subscribe("wheel_state/right", 1, rightCallback);
-	ros::Subscriber left = n.subscribe("wheel_state/left", 1, leftCallback);
+	// ros::Subscriber right = n.subscribe("wheel_state/right", 1, rightCallback);
+	// ros::Subscriber left = n.subscribe("wheel_state/left", 1, leftCallback);
 
-	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
+	// ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
-	ros::Rate loop(100);
-	ROS_INFO("Outside of loop");
-	while (ros::ok()) {
-		sensor_msgs::JointState merged_message;
-		ROS_INFO("Outside of loop");
-		merged_message.position[0] = m.right_wheel.position[0];
-		merged_message.velocity[0] = m.right_wheel.velocity[0];
-		merged_message.effort[0] = m.right_wheel.effort[0];
+	// ros::Rate loop(100);
+	// ROS_INFO("Outside of loop");
+	// while (ros::ok()) {
+	// 	sensor_msgs::JointState merged_message;
+	// 	ROS_INFO("Outside of loop");
+	// 	merged_message.position[0] = m.right_wheel.position[0];
+	// 	merged_message.velocity[0] = m.right_wheel.velocity[0];
+	// 	merged_message.effort[0] = m.right_wheel.effort[0];
 
-		merged_message.position[1] = m.left_wheel.position[0];
-		merged_message.velocity[1] = m.left_wheel.velocity[0];
-		merged_message.effort[1] = m.left_wheel.effort[0];
+	// 	merged_message.position[1] = m.left_wheel.position[0];
+	// 	merged_message.velocity[1] = m.left_wheel.velocity[0];
+	// 	merged_message.effort[1] = m.left_wheel.effort[0];
 
-		merged.publish(merged_message);
+	// 	merged.publish(merged_message);
 
-		ros::spinOnce();
-		loop.sleep();
-	}
+	// 	ros::spinOnce();
+	// 	loop.sleep();
+	// }
 
 
 	return 0;
