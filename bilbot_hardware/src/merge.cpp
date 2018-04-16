@@ -1,16 +1,16 @@
 #include "ros/ros.h"
-#include "bilbot_hardware/merge.hpp"
+// #include "bilbot_hardware/merge.hpp"
 #include "sensor_msgs/JointState.h"
 
-using namespace bilbot_hardware;
+sensor_msgs::JointState right_wheel, left_wheel;
 
-void merger::rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
+void rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
 	right_wheel.position[0] = rmsg->position[0];
 	right_wheel.velocity[0] = rmsg->velocity[0];
 	right_wheel.effort[0] = 0.0;
 }
 
-void merger::leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
+void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
 	left_wheel.position[0] = lmsg->position[0];
 	left_wheel.velocity[0] = lmsg->velocity[0];
 	left_wheel.effort[0] = 0.0;
@@ -21,10 +21,8 @@ int main(int argc, char **argv) {
 
 	ros::NodeHandle n;
 
-	merger m;
-
-	ros::Subscriber right = n.subscribe("wheel_state/right", 1, &merger::rightCallback, &m);
-	ros::Subscriber left = n.subscribe("wheel_state/left", 1, &merger::leftCallback, &m);
+	ros::Subscriber right = n.subscribe("wheel_state/right", 1, rightCallback);
+	ros::Subscriber left = n.subscribe("wheel_state/left", 1, leftCallback);
 
 	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
