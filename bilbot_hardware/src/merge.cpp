@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
 		merged_message.header.frame_id = "/world";
 		ROS_INFO("Inside of loop-1");
 		merged_message.name[0] = "right_wheel_joint";
-		merged_message.position[0] = right_wheel.position[0];
-		merged_message.velocity[0] = right_wheel.velocity[0];
+		// merged_message.position[0] = right_wheel.position[0];
+		// merged_message.velocity[0] = right_wheel.velocity[0];
 		ROS_INFO("Inside of loop-2");
 		merged_message.name[1] = "left_wheel_joint";
 		merged_message.position[1] = left_wheel.position;
