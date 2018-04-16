@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf
 )
 
-find_package(Boost REQUIRED COMPONENTS thread chrono bind)
+find_package(Boost REQUIRED COMPONENTS thread chrono)
 
 find_library(PIGPIO_LIB pigpio /usr/lib/)
 
