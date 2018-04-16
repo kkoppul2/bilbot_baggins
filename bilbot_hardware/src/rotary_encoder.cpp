@@ -27,13 +27,13 @@ void re_decoder::_pulse(int gpio, int level, uint32_t tick)
 	lastGpio = gpio;
 	lastLevel = level;
 	if (levA && gpio == mygpioB) {
-		level ? (mycallback)(1*resolution) : (mycallback)(-1*resolution);
+		level ? setPosition(1*resolution_) : setPosition(-1*resolution_);
 	} else if (!levA && gpio == mygpioB) {
-		level ? (mycallback)(-1*resolution) : (mycallback)(1*resolution);
+		level ? setPosition(-1*resolution_) : setPosition(1*resolution_);
 	} else if (levB && gpio == mygpioA) {
-		level ? (mycallback)(-1*resolution) : (mycallback)(1*resolution);
+		level ? setPosition(-1*resolution_) : setPosition(1*resolution_);
 	} else if (!levB && gpio == mygpioA) {
-		level ? (mycallback)(1*resolution) : (mycallback)(-1*resolution);
+		level ? setPosition(1*resolution_) : setPosition(-1*resolution_);
 	}
    }
 }
@@ -49,13 +49,11 @@ void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
    mySelf->_pulse(gpio, level, tick); /* Call the instance callback. */
 }
 
-re_decoder::re_decoder(int gpioA, int gpioB, re_decoderCB_t callback)
+re_decoder::re_decoder(int gpioA, int gpioB)
   : position_(0.0), position_old_(0.0), velocity_(0.0), velocity_old1_(0.0), velocity_old2_(0.0)
 {
    mygpioA = gpioA;
    mygpioB = gpioB;
-
-   mycallback = callback;
 
    levA=0;
    levB=0;
@@ -83,10 +81,6 @@ void re_decoder::re_cancel(void)
    gpioSetAlertFuncEx(mygpioB, 0, this);
 }
 
-void re_decoder::positionCallback(float way) {
-  position_ += way;
-}
-
 float re_decoder::getPosition() {
   return position_;
 
@@ -104,6 +98,10 @@ void re_decoder::filter_velocity() {
     position_old_ = position_;
     velocity_old2_ = velocity_old1_;
     velocity_old1_ = velocity_;
+}
+
+void re_decoder::setPosition(float way) {
+  position_ += way;
 }
 
 }

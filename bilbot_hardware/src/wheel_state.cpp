@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 
 	if (gpioInitialise() < 0) return 1;
 
-	re_decoder dec(pinA, pinB, re_decoder::positionCallback);
+	re_decoder dec(pinA, pinB);
 
 	while (ros::ok()){
 		sensor_msgs::JointState wheel;
