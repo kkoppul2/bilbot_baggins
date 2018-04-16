@@ -34,8 +34,8 @@ int main(int argc, char **argv) {
 
 		ROS_INFO("Inside of loop-1");
 		merged_message.name = {"right_wheel_joint", "left_wheel_joint"};
-		merged_message.position = {right_wheel.position[0], left_wheel.position[0]};
-		merged_message.velocity = {right_wheel.velocity[0], left_wheel.velocity[0]};
+		merged_message.position = {0.0, 5,0}//{right_wheel.position[0], left_wheel.position[0]};
+		merged_message.velocity = {2.2, 3.3}//{right_wheel.velocity[0], left_wheel.velocity[0]};
 		ROS_INFO("Inside of loop-2");
 		merged.publish(merged_message);
 
