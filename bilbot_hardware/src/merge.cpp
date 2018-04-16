@@ -33,9 +33,9 @@ int main(int argc, char **argv) {
 		merged_message.header.frame_id = "/world";
 
 		ROS_INFO("Inside of loop-1");
-		merged_message.name = boost::assign::list_of("right_wheel_joint")("left_wheel_joint");
-		merged_message.position = boost::assign::list_of(right_wheel.position[0])(left_wheel.position[0]);
-		merged_message.velocity = boost::assign::list_of(right_wheel.velocity[0])(left_wheel.velocity[0]);
+		merged_message.name = {"right_wheel_joint", "left_wheel_joint"};
+		merged_message.position = {right_wheel.position[0], left_wheel.position[0]};
+		merged_message.velocity = {right_wheel.velocity[0], left_wheel.velocity[0]};
 		ROS_INFO("Inside of loop-2");
 		merged.publish(merged_message);
 
