@@ -27,10 +27,10 @@ int main(int argc, char **argv) {
 	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
 	ros::Rate loop(100);
-
+	ROS_INFO("Outside of loop");
 	while (ros::ok()) {
 		sensor_msgs::JointState merged_message;
-
+		ROS_INFO("Outside of loop");
 		merged_message.position[0] = m.right_wheel.position[0];
 		merged_message.velocity[0] = m.right_wheel.velocity[0];
 		merged_message.effort[0] = m.right_wheel.effort[0];
