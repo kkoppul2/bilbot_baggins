@@ -38,7 +38,12 @@ add_executable(rotary_encoder_node
 target_link_libraries(rotary_encoder_node ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(rotary_encoder_node bilbot_msgs_gencpp)
 
-install(TARGETS motor_controller_node rotary_encoder_node
+add_executable(message_merge_node
+  src/merge.cpp
+)
+target_link_libraries(message_merge_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+
+install(TARGETS motor_controller_node rotary_encoder_node message_merge_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
