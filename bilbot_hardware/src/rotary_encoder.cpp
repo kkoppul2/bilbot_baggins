@@ -50,7 +50,7 @@ void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
 }
 
 re_decoder::re_decoder(int gpioA, int gpioB, re_decoderCB_t callback)
-  : position_(0.0), position_old_(0.0), velocity_(0.0), velocity_old1_(0.0), velocity_old1_(0.0)
+  : position_(0.0), position_old_(0.0), velocity_(0.0), velocity_old1_(0.0), velocity_old2_(0.0)
 {
    mygpioA = gpioA;
    mygpioB = gpioB;

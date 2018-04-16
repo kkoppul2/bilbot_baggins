@@ -19,6 +19,11 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Boost REQUIRED COMPONENTS thread chrono)
 
+find_library(pigpio_lib 
+  NAMES pigpio 
+  HINTS /usr/lib/
+)
+
 catkin_package()
 
 include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
@@ -26,14 +31,14 @@ include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 add_executable(motor_controller_node
   src/motor_output.cpp
   src/motor_controller.cpp)
-target_link_libraries(motor_controller_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(motor_controller_node pigpio_lib ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(motor_controller_node bilbot_msgs_gencpp)
 
 
 add_executable(rotary_encoder_node
  src/wheel_state.cpp
  src/rotary_encoder.cpp)
-target_link_libraries(rotary_encoder_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(rotary_encoder_node pigpio_lib ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(rotary_encoder_node bilbot_msgs_gencpp)
 
 install(TARGETS motor_controller_node rotary_encoder_node
