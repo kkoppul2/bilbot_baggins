@@ -11,8 +11,8 @@ int main(int argc, char **argv) {
 
 	merger m;
 
-	ros::Subscriber right = n.subscribe("wheel_state/right", 1, &merger::rightCallback, &this);
-	ros::Subscriber left = n.subscribe("wheel_state/left", 1, &merger::leftCallback, &this);
+	ros::Subscriber right = n.subscribe("wheel_state/right", 1, &merger::rightCallback, &m);
+	ros::Subscriber left = n.subscribe("wheel_state/left", 1, &merger::leftCallback, &m);
 
 	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
