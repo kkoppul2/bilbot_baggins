@@ -1,4 +1,5 @@
 #include "ros/ros.h"
+#include <boost/assign.hpp>
 // #include "bilbot_hardware/merge.hpp"
 #include "sensor_msgs/JointState.h"
 
@@ -30,15 +31,12 @@ int main(int argc, char **argv) {
 		sensor_msgs::JointState merged_message;
 		merged_message.header.stamp = ros::Time::now();
 		merged_message.header.frame_id = "/world";
+
 		ROS_INFO("Inside of loop-1");
-		merged_message.name[0] = "right_wheel_joint";
-		// merged_message.position[0] = right_wheel.position[0];
-		// merged_message.velocity[0] = right_wheel.velocity[0];
+		merged_message.name = boost::assign::list_of("right_wheel_joint")("left_wheel_joint");
+		merged_message.position = boost::assign::list_of(right_wheel.position[0])(left_wheel.position[0]);
+		merged_message.velocity = boost::assign::list_of(right_wheel.velocity[0])(left_wheel.velocity[0]);
 		ROS_INFO("Inside of loop-2");
-		merged_message.name[1] = "left_wheel_joint";
-		merged_message.position[1] = left_wheel.position[0];
-		merged_message.velocity[1] = left_wheel.velocity[0];
-		ROS_INFO("Inside of loop-3");
 		merged.publish(merged_message);
 
 		ros::spinOnce();
