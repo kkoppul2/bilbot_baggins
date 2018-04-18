@@ -15,7 +15,7 @@ class re_decoder
 
    int callback_a_id, callback_b_id;
 
-   void _pulse(int gpio, int level, uint32_t tick);
+   void _pulse(unsigned gpio, unsigned level, uint32_t tick);
 
    /* Need a static callback to link with C. */
    static void _pulseEx(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user);
