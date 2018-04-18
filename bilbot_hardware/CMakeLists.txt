@@ -3,25 +3,24 @@ project(bilbot_hardware)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
-add_compile_options(-fno-sanitize-recover=all
-      -fsanitize=undefined
-      -fsanitize=address
-      -fsanitize=leak
-      -fsanitize=bounds
-      -fsanitize=bounds-strict
-      -fsanitize=shift
-      -fsanitize=integer-divide-by-zero
-      -fsanitize=unreachable
-      -fsanitize=vla-bound
-      -fsanitize=null
-      -fsanitize=signed-integer-overflow
-      -fsanitize=object-size
-      -fsanitize=bool
-      -fsanitize=enum
-      -fsanitize=return
-      -fsanitize=alignment
-      -fsanitize=float-divide-by-zero
-)
+# add_compile_options(-fno-sanitize-recover=all
+#       -fsanitize=undefined
+#       -fsanitize=address
+#       -fsanitize=leak
+#       -fsanitize=bounds
+#       -fsanitize=shift
+#       -fsanitize=integer-divide-by-zero
+#       -fsanitize=unreachable
+#       -fsanitize=vla-bound
+#       -fsanitize=null
+#       -fsanitize=signed-integer-overflow
+#       -fsanitize=object-size
+#       -fsanitize=bool
+#       -fsanitize=enum
+#       -fsanitize=return
+#       -fsanitize=alignment
+#       -fsanitize=float-divide-by-zero
+# )
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
