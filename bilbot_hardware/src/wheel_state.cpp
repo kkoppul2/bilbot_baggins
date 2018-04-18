@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	ros::Rate loop(100);
 	int pi;
 
-	if ((pi = pigpio_start(10.195.84.205, 8888)) < 0) return 1;
+	if ((pi = pigpio_start(NULL, NULL)) < 0) return 1;
 
 	re_decoder dec(pi, pinA, pinB);
 

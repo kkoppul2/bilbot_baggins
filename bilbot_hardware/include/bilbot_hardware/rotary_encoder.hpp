@@ -13,7 +13,7 @@ class re_decoder
 
    float position_, position_old_, velocity_, velocity_old1_, velocity_old2_;
 
-   int callback_a_i, callback_b_id;
+   int callback_a_id, callback_b_id;
 
    void _pulse(int gpio, int level, uint32_t tick);
 
