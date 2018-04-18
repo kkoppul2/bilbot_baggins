@@ -21,7 +21,10 @@ int main(int argc, char **argv) {
 
 	//Initialize pigpio library
 	int pi;
-	if ((pi = pigpio_start(NULL, NULL))) return 1;
+	if ((pi = pigpio_start(0,0)) < 0) {
+		fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
+		return 1;
+	}
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
