@@ -1,4 +1,4 @@
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 
 #include "bilbot_hardware/rotary_encoder.hpp"
 
@@ -49,7 +49,7 @@ void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
    mySelf->_pulse(gpio, level, tick); /* Call the instance callback. */
 }
 
-re_decoder::re_decoder(int gpioA, int gpioB)
+re_decoder::re_decoder(int pi, int gpioA, int gpioB)
   : position_(0.0), position_old_(0.0), velocity_(0.0), velocity_old1_(0.0), velocity_old2_(0.0)
 {
    mygpioA = gpioA;
@@ -61,24 +61,24 @@ re_decoder::re_decoder(int gpioA, int gpioB)
    lastGpio = -1;
    lastLevel = -1;
 
-   gpioSetMode(gpioA, PI_INPUT);
-   gpioSetMode(gpioB, PI_INPUT);
+   set_mode(pi, gpioA, PI_INPUT);
+   set_mode(pi, gpioB, PI_INPUT);
 
    /* pull up is needed as encoder common is grounded */
 
-   gpioSetPullUpDown(gpioA, PI_PUD_UP);
-   gpioSetPullUpDown(gpioB, PI_PUD_UP);
+   set_pull_up_down(pi, gpioA, PI_PUD_UP);
+   set_pull_up_down(pi, gpioB, PI_PUD_UP);
 
    /* monitor encoder level changes */
 
-   gpioSetAlertFuncEx(gpioA, _pulseEx, this);
-   gpioSetAlertFuncEx(gpioB, _pulseEx, this);
+   callback_a_id = callback_ex(pi, gpioA, EITHER_EDGE, _pulseEx, this);
+   callback_b_id = callback_ex(pi, gpioB, EITHER_EDGE, _pulseEx, this);
 }
 
 void re_decoder::re_cancel(void)
 {
-   gpioSetAlertFuncEx(mygpioA, 0, this);
-   gpioSetAlertFuncEx(mygpioB, 0, this);
+   callback_cancel(callback_a_id);
+   callback_cancel(callback_b_id);
 }
 
 float re_decoder::getPosition() {

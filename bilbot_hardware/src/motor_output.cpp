@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 #include "bilbot_hardware/motor_controller.hpp"
 #include "sensor_msgs/JointState.h"
 

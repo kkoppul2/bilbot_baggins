@@ -1,5 +1,5 @@
 #include "bilbot_hardware/motor_controller.hpp"
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 
 namespace bilbot_hardware {
 

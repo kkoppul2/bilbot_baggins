@@ -9,9 +9,11 @@ class re_decoder
 {
    int mygpioA, mygpioB, levA, levB, lastGpio, lastLevel;
 
-   float resolution_ = 0.1308997; //Angular resolution per encoder tick
+   float resolution_ = 0.00132516393; //Angular resolution per encoder tick
 
    float position_, position_old_, velocity_, velocity_old1_, velocity_old2_;
+
+   int callback_a_i, callback_b_id;
 
    void _pulse(int gpio, int level, uint32_t tick);
 
@@ -24,7 +26,7 @@ class re_decoder
 
    public:
 
-   re_decoder(int gpioA, int gpioB);
+   re_decoder(int pi, int gpioA, int gpioB);
    /*
       This function establishes a rotary encoder on gpioA and gpioB.
 

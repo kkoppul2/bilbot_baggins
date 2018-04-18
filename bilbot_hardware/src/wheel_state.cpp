@@ -1,4 +1,4 @@
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 #include <unistd.h>
 
 #include "bilbot_hardware/rotary_encoder.hpp"
@@ -20,10 +20,11 @@ int main(int argc, char *argv[])
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 100);
 
 	ros::Rate loop(100);
+	int pi;
 
-	if (gpioInitialise() < 0) return 1;
+	if ((pi = pigpio_start(10.195.84.205, 8888)) < 0) return 1;
 
-	re_decoder dec(pinA, pinB);
+	re_decoder dec(pi, pinA, pinB);
 
 	while (ros::ok()){
 		sensor_msgs::JointState wheel;
@@ -44,7 +45,7 @@ int main(int argc, char *argv[])
 	//release GPIO resources
 	dec.re_cancel();
 	//end gpio use functionality
-	gpioTerminate();
+	pigpio_stop(pi);
 
 	return 0;
 }
