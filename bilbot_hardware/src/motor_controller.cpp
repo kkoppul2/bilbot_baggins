@@ -3,17 +3,17 @@
 
 namespace bilbot_hardware {
 
-motor_controller::motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki) 
+motor_controller::motor_controller(int pi, bool side, int gpioA, int gpioB, float kp, float kd, float ki) 
 	: kp_(kp), kd_(kd), ki_(ki), side_(side)
 {
-	gpioSetMode(gpioA, PI_OUTPUT);
-	gpioSetMode(gpioA, PI_OUTPUT);
+	set_mode(pi, gpioA, PI_INPUT);
+	set_mode(pi, gpioB, PI_INPUT);
 
-	gpioSetPullUpDown(gpioA, PI_PUD_DOWN);
-	gpioSetPullUpDown(gpioB, PI_PUD_DOWN);
+	set_pull_up_down(pi, gpioA, PI_PUD_DOWN);
+	set_pull_up_down(pi, gpioB, PI_PUD_DOWN);
 
-	gpioSetPWMfrequency(gpioA, 50000);
-	gpioSetPWMfrequency(gpioB, 50000);
+	set_PWM_frequency(pi, gpioA, 40000);
+	set_PWM_frequency(pi, gpioB, 40000);
 }
 
 motor_controller::~motor_controller() {

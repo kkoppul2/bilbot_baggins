@@ -19,16 +19,15 @@ int main(int argc, char **argv) {
 	n.getParam("pinB", pinB);
 	n.getParam("side", side);
 
-	motor_controller mc(side, pinA, pinB, 1.0, 0.0, 0.0);
-
 	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, &motor_controller::commandCallback, &mc);
 
 	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
 
 	//Initialize pigpio library
 	int pi;
-	if (gpioInitialise() < 0) return 1;
+	if ((pi = pigpio_start(NULL, NULL))) return 1;
 	//Create motor controller class;
+	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
 	float motor_u;
 
@@ -48,11 +47,11 @@ int main(int argc, char **argv) {
 		//Gpio output 
 		if (motor_u >= 0)
 		{
-			gpioPWM(pinA, motor_u);
-			gpioPWM(pinB, 0);
+			set_PWM_dutycycle(pi, pinA, motor_u);
+			set_PWM_dutycycle(pi, pinB, 0);
 		} else {
-			gpioPWM(pinA, 0);
-			gpioPWM(pinB, motor_u);
+			set_PWM_dutycycle(pi, pinA, 0);
+			set_PWM_dutycycle(pi, pinB, motor_u);
 		}
 
 		//Ros Looping
@@ -60,7 +59,7 @@ int main(int argc, char **argv) {
 		loop.sleep();
 	}
 
-	gpioTerminate();
+	pigpio_stop(pi);
 
 	return 0;
 }
