@@ -35,7 +35,7 @@ private:
 	void set_wheel_vel(float wheel_vel);
 
 public:
-	motor_controller(bool side, int gpioA, int gpioB, float kp, float kd, float ki);
+	motor_controller(int pi, bool side, int gpioA, int gpioB, float kp, float kd, float ki);
 	~motor_controller();
 	
 	void filter_velocity();

@@ -19,15 +19,15 @@ int main(int argc, char **argv) {
 	n.getParam("pinB", pinB);
 	n.getParam("side", side);
 
-	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, &motor_controller::commandCallback, &mc);
-
-	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
-
 	//Initialize pigpio library
 	int pi;
 	if ((pi = pigpio_start(NULL, NULL))) return 1;
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
+
+	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, &motor_controller::commandCallback, &mc);
+
+	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
 
 	float motor_u;
 
