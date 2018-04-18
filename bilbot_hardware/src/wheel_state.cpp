@@ -21,8 +21,11 @@ int main(int argc, char *argv[])
 
 	ros::Rate loop(100);
 	int pi;
-
-	if ((pi = pigpio_start(NULL, NULL)) < 0) return 1;
+	ROS_INFO("Before Pigpio init");
+	if ((pi = pigpio_start(0,0)) < 0) {
+		fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
+		return 1;
+	}
 
 	re_decoder dec(pi, pinA, pinB);
 
