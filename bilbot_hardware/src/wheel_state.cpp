@@ -35,9 +35,9 @@ int main(int argc, char *argv[])
 		wheel.header.frame_id = "/world";
 
 		//Publish position and velocity to JointState message
-		wheel.position[0] = 0.0; //dec.getPosition();
-		wheel.velocity[0] = 0.0; //dec.getVelocity();
-		wheel.effort[0] = 0.0;
+		// wheel.position[0] = 0.0; //dec.getPosition();
+		// wheel.velocity[0] = 0.0; //dec.getVelocity();
+		// wheel.effort[0] = 0.0;
 
 		wheel_state.publish(wheel);
 
