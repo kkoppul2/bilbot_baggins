@@ -1,15 +1,16 @@
-#include <pigpiod_if2.h>
-#include <unistd.h>
-
-#include "bilbot_hardware/rotary_encoder.hpp"
 #include "ros/ros.h"
+#include "bilbot_hardware/rotary_encoder.hpp"
 #include "sensor_msgs/JointState.h"
+
+#include <pigpiod_if2.h>
+#include <sstream>
+#include <unistd.h>
 
 using namespace bilbot_hardware;
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-	ros::init(argc, argv, "wheel_state");
+	ros::init(argc, argv, "wheel_state_node");
 
 	ros::NodeHandle n;
 
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
 	// n.param("pinA", pinA, 7);
 	// n.param("pinB", pinB, 8);
 
-	// ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 100);
+	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
 	ros::Rate loop(100);
 	// int pi;
@@ -38,7 +39,7 @@ int main(int argc, char *argv[])
 		// // wheel.position[0] = 0.0; //dec.getPosition();
 		// // wheel.velocity[0] = 0.0; //dec.getVelocity();
 		// // wheel.effort[0] = 0.0;
-
+		ROS_INFO("Reached the loop");
 		// wheel_state.publish(wheel);
 
 		ros::spinOnce();
