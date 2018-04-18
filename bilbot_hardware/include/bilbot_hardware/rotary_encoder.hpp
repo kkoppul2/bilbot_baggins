@@ -2,6 +2,7 @@
 #define ROTARY_ENCODER_HPP
 
 #include <stdint.h>
+#include <pigpiod_if2.h>
 
 namespace bilbot_hardware {
 

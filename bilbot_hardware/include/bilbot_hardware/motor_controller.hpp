@@ -2,7 +2,7 @@
 #define MOTOR_CONTROLLER_H
 
 #include "math.h"
-#include <pigpio.h>
+#include <pigpiod_if2.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
 #include "sensor_msgs/JointState.h"

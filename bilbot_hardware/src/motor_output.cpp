@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
 
 	//Initialize pigpio library
+	int pi;
 	if (gpioInitialise() < 0) return 1;
 	//Create motor controller class;
 
