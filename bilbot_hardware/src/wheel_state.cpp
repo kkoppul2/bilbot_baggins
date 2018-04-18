@@ -20,14 +20,14 @@ int main(int argc, char *argv[])
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 100);
 
 	ros::Rate loop(100);
-	int pi;
-	ROS_INFO("Before Pigpio init");
-	if ((pi = pigpio_start(0,0)) < 0) {
-		fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
-		return 1;
-	}
+	// int pi;
+	// ROS_INFO("Before Pigpio init");
+	// if ((pi = pigpio_start(0,0)) < 0) {
+	// 	fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
+	// 	return 1;
+	// }
 
-	re_decoder dec(pi, pinA, pinB);
+	// re_decoder dec(pi, pinA, pinB);
 
 	while (ros::ok()){
 		sensor_msgs::JointState wheel;
@@ -35,8 +35,8 @@ int main(int argc, char *argv[])
 		wheel.header.frame_id = "/world";
 
 		//Publish position and velocity to JointState message
-		wheel.position[0] = dec.getPosition();
-		wheel.velocity[0] = dec.getVelocity();
+		wheel.position[0] = 0.0; //dec.getPosition();
+		wheel.velocity[0] = 0.0; //dec.getVelocity();
 		wheel.effort[0] = 0.0;
 
 		wheel_state.publish(wheel);
@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
 		loop.sleep();
 	}
 	//release GPIO resources
-	dec.re_cancel();
+	// dec.re_cancel();
 	//end gpio use functionality
-	pigpio_stop(pi);
+	// pigpio_stop(pi);
 
 	return 0;
 }
