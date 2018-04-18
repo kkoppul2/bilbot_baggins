@@ -20,7 +20,7 @@
 
 namespace bilbot_hardware {
 
-void re_decoder::_pulse(int gpio, int level, uint32_t tick)
+void re_decoder::_pulse(unsigned gpio, unsigned level, uint32_t tick)
 {
    if (!(gpio == lastGpio && level == lastLevel)) {
 	if (gpio == mygpioA) levA = level; else levB = level;
@@ -38,7 +38,7 @@ void re_decoder::_pulse(int gpio, int level, uint32_t tick)
    }
 }
 
-void re_decoder::_pulseEx(int gpio, int level, uint32_t tick, void *user)
+void re_decoder::_pulseEx(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user)
 {
    /*
       Need a static callback to link with C.

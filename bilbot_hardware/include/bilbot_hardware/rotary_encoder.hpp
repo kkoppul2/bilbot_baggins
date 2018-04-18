@@ -18,7 +18,7 @@ class re_decoder
    void _pulse(int gpio, int level, uint32_t tick);
 
    /* Need a static callback to link with C. */
-   static void _pulseEx(int gpio, int level, uint32_t tick, void *user);
+   static void _pulseEx(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user);
 
    void filter_velocity();
 
