@@ -71,8 +71,8 @@ re_decoder::re_decoder(int pi, int gpioA, int gpioB)
 
    /* monitor encoder level changes */
 
-   callback_a_id = callback_ex(pi, gpioA, EITHER_EDGE, _pulseEx, &this);
-   callback_b_id = callback_ex(pi, gpioB, EITHER_EDGE, _pulseEx, &this);
+   callback_a_id = callback_ex(pi, gpioA, EITHER_EDGE, _pulseEx, this);
+   callback_b_id = callback_ex(pi, gpioB, EITHER_EDGE, _pulseEx, this);
 }
 
 void re_decoder::re_cancel(void)
