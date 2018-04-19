@@ -14,7 +14,31 @@ public:
 
 	void rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg);
 	void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg);
+
+	void left_init();
+	void right_init();
+
 };
+
+void merger::right_init() {
+	right_wheel.name.resize(1);
+	right_wheel.position.resize(1);
+	right_wheel.velocity.resize(1);
+
+	right_wheel.name[0] = "right_wheel_joint";
+	right_wheel.position[0] = 0.0;
+	right_wheel.velocity[0] = 0.0;
+}
+
+void merger::left_init() {
+	left_wheel.name.resize(1);
+	left_wheel.position.resize(1);
+	left_wheel.velocity.resize(1);
+
+	left_wheel.name[0] = "left_wheel_joint";
+	left_wheel.position[0] = 0.0;
+	left_wheel.velocity[0] = 0.0;
+}
 
 void merger::rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
 	right_wheel = *rmsg;

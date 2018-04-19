@@ -12,6 +12,9 @@ int main(int argc, char **argv) {
 
 	merger m;
 
+	m.left_init();
+	m.right_init();
+
 	ros::Subscriber right = n.subscribe("wheel_state/right", 1, &merger::rightCallback, &m);
 	ros::Subscriber left = n.subscribe("wheel_state/left", 1, &merger::leftCallback, &m);
 
@@ -27,8 +30,6 @@ int main(int argc, char **argv) {
 		merged_message.name.resize(2);
 		merged_message.position.resize(2);
 		merged_message.velocity.resize(2);
-
-		m.right_wheel.name[0] = "";
 
 		merged_message.name[0] = m.right_wheel.name[0];
 		merged_message.name[1] = ""; //left_wheel.name[0];
