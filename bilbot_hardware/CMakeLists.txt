@@ -37,7 +37,6 @@ target_link_libraries(motor_controller_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catk
 add_dependencies(motor_controller_node 
   ${catkin_EXPORTED_TARGETS} 
   bilbot_msgs_gencpp 
-  bilbot_msgs_generate_messages_cpp 
   ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(rotary_encoder_node
@@ -50,7 +49,6 @@ target_link_libraries(rotary_encoder_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin
 add_dependencies(rotary_encoder_node 
   ${catkin_EXPORTED_TARGETS} 
   bilbot_msgs_gencpp 
-  bilbot_msgs_generate_messages_cpp
   rotary_encoder_node 
   ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
