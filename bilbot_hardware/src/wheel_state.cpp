@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	// re_decoder dec(pi, pinA, pinB);
+	re_decoder dec(pi, pinA, pinB);
 
 	while (ros::ok()){
 		// sensor_msgs::JointState wheel;
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
 		loop.sleep();
 	}
 	//release GPIO resources
-	// dec.re_cancel();
+	dec.re_cancel();
 	//end gpio use functionality
 	pigpio_stop(pi);
 
