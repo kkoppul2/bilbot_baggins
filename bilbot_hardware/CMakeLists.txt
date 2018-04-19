@@ -27,15 +27,6 @@ find_library(REALTIME_LIB rt /usr/lib/arm-linux-gnueabihf/)
 
 include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
-generate_messages(
-  DEPENDENCIES
-  bilbot_msgs
-  geometry_msgs
-  sensor_msgs
-  std_msgs
-)
-
-
 catkin_package()
 
 
