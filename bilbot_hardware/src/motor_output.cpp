@@ -2,6 +2,7 @@
 #include <pigpiod_if2.h>
 #include "bilbot_hardware/motor_controller.hpp"
 #include "sensor_msgs/JointState.h"
+#include "bilbot_msgs/Drive.h"
 
 using namespace bilbot_hardware;
 
@@ -10,14 +11,10 @@ int main(int argc, char **argv) {
 
 	ros::NodeHandle n;
 
-	std::string cmd_topic, curr_topic;
-	n.getParam("command_topic", cmd_topic);
-	n.getParam("state_topic", curr_topic);
-
 	int pinA, pinB, side;
-	n.getParam("pinA", pinA);
-	n.getParam("pinB", pinB);
-	n.getParam("side", side);
+	n.param("pinA", pinA, "12");
+	n.param("pinB", pinB, "13");
+	n.param("side", side, "0");
 
 	//Initialize pigpio library
 	int pi;
@@ -28,9 +25,9 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
-	ros::Subscriber cmd = n.subscribe(cmd_topic, 10, &motor_controller::commandCallback, &mc);
+	ros::Subscriber cmd = n.subscribe("cmd_vel", 10, &motor_controller::commandCallback, &mc);
 
-	ros::Subscriber curr = n.subscribe(curr_topic, 10, &motor_controller::stateCallback, &mc);
+	ros::Subscriber curr = n.subscribe("wheel_state/combined", 10, &motor_controller::stateCallback, &mc);
 
 	float motor_u;
 
