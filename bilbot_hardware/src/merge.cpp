@@ -3,7 +3,7 @@
 #include "bilbot_hardware/merge.hpp"
 #include "sensor_msgs/JointState.h"
 
-
+using namespace bilbot_hardware;
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "merger");
@@ -12,8 +12,8 @@ int main(int argc, char **argv) {
 
 	bilbot_hardware::merger m;
 
-	ros::Subscriber right = n.subscribe("wheel_state/right", 1, merger::rightCallback, &m);
-	ros::Subscriber left = n.subscribe("wheel_state/left", 1, merger::leftCallback, &m);
+	ros::Subscriber right = n.subscribe("wheel_state/right", 1, &merger::rightCallback, &m);
+	ros::Subscriber left = n.subscribe("wheel_state/left", 1, &merger::leftCallback, &m);
 
 	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
