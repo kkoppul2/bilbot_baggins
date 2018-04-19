@@ -15,8 +15,8 @@ int main(int argc, char **argv) {
 	ros::NodeHandle n;
 
 	int pinA, pinB, side;
-	n.param("pinA", pinA, 12);
-	n.param("pinB", pinB, 13);
+	n.param("pinA", pinA, 7);
+	n.param("pinB", pinB, 8);
 	n.param("side", side, 0);
 
 	//Initialize pigpio library

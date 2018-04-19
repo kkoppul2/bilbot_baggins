@@ -12,7 +12,6 @@ using namespace bilbot_hardware;
 
 int main(int argc, char **argv)
 {
-	// ROS_INFO("Before node init");
 	ros::init(argc, argv, "wheel_state_node");
 
 	ros::NodeHandle n;
@@ -23,12 +22,10 @@ int main(int argc, char **argv)
 	n.param("pinA", pinA, 7);
 	n.param("pinB", pinB, 8);
 
-	ROS_INFO("Before publisher init");
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
 	ros::Rate loop(100);
 	int pi;
-	ROS_INFO("Before Pigpio init");
 	if ((pi = pigpio_start(0,0)) < 0) {
 		fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
 		return 1;
@@ -50,7 +47,7 @@ int main(int argc, char **argv)
 		wheel.position[0] = dec.getPosition();
 		wheel.velocity[0] = dec.getVelocity();
 
-		ROS_INFO("Reached the loop");
+		// ROS_INFO("Reached the loop");
 		wheel_state.publish(wheel);
 
 		ros::spinOnce();
