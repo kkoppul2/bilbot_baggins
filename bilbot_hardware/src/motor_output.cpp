@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
-	ros::Subscriber cmd = n.subscribe("cmd_vel", 10, &motor_controller::commandCallback, &mc);
+	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
 	ros::Subscriber curr = n.subscribe("wheel_state/combined", 10, &motor_controller::stateCallback, &mc);
 
