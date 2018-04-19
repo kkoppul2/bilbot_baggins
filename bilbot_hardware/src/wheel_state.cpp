@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "bilbot_hardware/rotary_encoder.hpp"
 #include "sensor_msgs/JointState.h"
+#include "std_msgs/Float64.h"
 #include "std_msgs/String.h"
 
 #include <pigpiod_if2.h>
@@ -35,11 +36,11 @@ int main(int argc, char **argv)
 
 	while (ros::ok()){
 		sensor_msgs::JointState wheel;
+		wheel.position.resize(1);
 		wheel.header.stamp = ros::Time::now();
 		wheel.header.frame_id = "/world";
-
 		// // //Publish position and velocity to JointState message
-		wheel.position = 1.0; //dec.getPosition();
+		wheel.position[0] = 1.0; //dec.getPosition();
 		// wheel.velocity[0] = 0.0; //dec.getVelocity();
 		// wheel.effort[0] = 0.0;
 		ROS_INFO("Reached the loop");
