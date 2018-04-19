@@ -6,13 +6,11 @@
 sensor_msgs::JointState right_wheel, left_wheel;
 
 void rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
-	right_wheel.position = rmsg->position;
-	right_wheel.velocity = rmsg->velocity;
+	right_wheel = *rmsg;
 }
 
 void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
-	left_wheel.position = lmsg->position;
-	left_wheel.velocity = lmsg->velocity;
+	left_wheel = *lmsg;
 }
 
 int main(int argc, char **argv) {
@@ -26,17 +24,23 @@ int main(int argc, char **argv) {
 	ros::Publisher merged = n.advertise<sensor_msgs::JointState>("wheel_state/combined", 1);
 
 	ros::Rate loop(100);
-	ROS_INFO("Outside of loop");
+
 	while (ros::ok()) {
 		sensor_msgs::JointState merged_message;
 		merged_message.header.stamp = ros::Time::now();
 		merged_message.header.frame_id = "/world";
 
-		ROS_INFO("Inside of loop-1");
-		merged_message.name = {"right_wheel_joint", "left_wheel_joint"};
-		merged_message.position = {right_wheel.position.front(), left_wheel.position.front()};//{right_wheel.position[0], left_wheel.position[0]};
-		merged_message.velocity = {right_wheel.velocity.front(), left_wheel.velocity.front()};//{right_wheel.velocity[0], left_wheel.velocity[0]};
-		ROS_INFO("Inside of loop-2");
+		merged_message.name.resize(2);
+		merged_message.position.resize(2);
+		merged_message.velocity.resize(2);
+
+		merged_message.name[0] = right_wheel.name[0];
+		merged_message.name[1] = left_wheel.name[0];
+		merged_message.position[0] = right_wheel.position[0];
+		merged_message.position[1] = left_wheel.position[0];
+		merged_message.velocity[0] = right_wheel.velocity[0];
+		merged_message.velocity[1] = left_wheel.velocity[0];
+
 		merged.publish(merged_message);
 
 		ros::spinOnce();

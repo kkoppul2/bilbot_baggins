@@ -54,16 +54,16 @@ add_dependencies(rotary_encoder_node
   rotary_encoder_node 
   ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
-# add_executable(message_merge_node
-#   src/merge.cpp
-# )
-# target_link_libraries(message_merge_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-# add_dependencies(message_merge_node 
-#   ${catkin_EXPORTED_TARGETS}
-#   message_merge_node 
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS})
+add_executable(message_merge_node
+  src/merge.cpp
+)
+target_link_libraries(message_merge_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(message_merge_node 
+  ${catkin_EXPORTED_TARGETS}
+  message_merge_node 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
-install(TARGETS  rotary_encoder_node 
+install(TARGETS message_merge_node rotary_encoder_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
