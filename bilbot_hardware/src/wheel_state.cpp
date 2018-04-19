@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "bilbot_hardware/rotary_encoder.hpp"
 #include "sensor_msgs/JointState.h"
+#include "std_msgs/String.h"
 
 #include <pigpiod_if2.h>
 #include <sstream>
@@ -10,7 +11,16 @@ using namespace bilbot_hardware;
 
 int main(int argc, char **argv)
 {
-	ROS_INFO("Before node init");
+
+	std_msgs::String msg;
+
+    std::stringstream ss;
+    ss << "Before Node init";
+    msg.data = ss.str();
+
+    ROS_INFO("%s", msg.data.c_str());
+
+	// ROS_INFO("Before node init");
 	ros::init(argc, argv, "wheel_state_node");
 
 	ros::NodeHandle n;
