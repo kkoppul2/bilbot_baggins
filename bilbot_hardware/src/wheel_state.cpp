@@ -11,23 +11,15 @@ using namespace bilbot_hardware;
 
 int main(int argc, char **argv)
 {
-
-	std_msgs::String msg;
-
-    std::stringstream ss;
-    ss << "Before Node init";
-    msg.data = ss.str();
-
-    ROS_INFO("%s", msg.data.c_str());
-
 	// ROS_INFO("Before node init");
 	ros::init(argc, argv, "wheel_state_node");
 
 	ros::NodeHandle n;
 
-	// int pinA, pinB;
-	// n.param("pinA", pinA, 7);
-	// n.param("pinB", pinB, 8);
+	int pinA, pinB;
+	n.param("pinA", pinA, 7);
+	n.param("pinB", pinB, 8);
+	
 	ROS_INFO("Before publisher init");
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 

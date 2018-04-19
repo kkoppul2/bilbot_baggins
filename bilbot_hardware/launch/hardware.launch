@@ -2,6 +2,8 @@
 
 	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" >
 		<remap from="wheel_state" to="wheel_state/right"/>
+		<param name="pinA" value="7" />
+		<param name="pinB" value="8" />
 	</node>
 
 <!-- 	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="left_wheel" respawn="true" >
