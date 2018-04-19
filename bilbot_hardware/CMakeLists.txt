@@ -4,23 +4,7 @@ project(bilbot_hardware)
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 # add_compile_options(-fno-sanitize-recover=all
-#       -fsanitize=undefined
-#       -fsanitize=address
-#       -fsanitize=leak
-#       -fsanitize=bounds
-#       -fsanitize=shift
-#       -fsanitize=integer-divide-by-zero
-#       -fsanitize=unreachable
-#       -fsanitize=vla-bound
-#       -fsanitize=null
-#       -fsanitize=signed-integer-overflow
-#       -fsanitize=object-size
-#       -fsanitize=bool
-#       -fsanitize=enum
-#       -fsanitize=return
-#       -fsanitize=alignment
-#       -fsanitize=float-divide-by-zero
-# )
+
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -32,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   bilbot_msgs
   std_msgs
+  realtime_tools
   tf
 )
 
@@ -40,28 +25,41 @@ find_package(Boost REQUIRED COMPONENTS thread chrono)
 find_library(PIGPIO_LIB pigpiod_if2 /usr/lib/)
 find_library(REALTIME_LIB rt /usr/lib/arm-linux-gnueabihf/)
 
+include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+
+generate_messages(
+  DEPENDENCIES
+  bilbot_msgs
+  geometry_msgs
+  sensor_msgs
+  std_msgs
+)
+
+
 catkin_package()
 
-include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
+
 
 add_executable(motor_controller_node
   src/motor_output.cpp
   src/motor_controller.cpp)
 target_link_libraries(motor_controller_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(motor_controller_node ${catkin_EXPORTED_TARGETS} bilbot_msgs_gencpp)
-
+add_dependencies(motor_controller_node ${catkin_EXPORTED_TARGETS} bilbot_msgs_gencpp bilbot_msgs_generate_messages_cpp)
+add_dependencies(motor_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(rotary_encoder_node
  src/wheel_state.cpp
  src/rotary_encoder.cpp)
 target_link_libraries(rotary_encoder_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(rotary_encoder_node ${catkin_EXPORTED_TARGETS} bilbot_msgs_gencpp)
+add_dependencies(rotary_encoder_node ${catkin_EXPORTED_TARGETS} bilbot_msgs_gencpp bilbot_msgs_generate_messages_cpp)
+add_dependencies(rotary_encoder_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(message_merge_node
   src/merge.cpp
 )
 target_link_libraries(message_merge_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(message_merge_node ${catkin_EXPORTED_TARGETS})
+add_dependencies(message_merge_node ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 install(TARGETS motor_controller_node rotary_encoder_node message_merge_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
@@ -135,25 +133,7 @@ roslint_add_test()
 #   geometry_msgs#   sensor_msgs#   std_msgs
 # )
 
-################################################
-## Declare ROS dynamic reconfigure parameters ##
-################################################
 
-## To declare and build dynamic reconfigure parameters within this
-## package, follow these steps:
-## * In the file package.xml:
-##   * add a build_depend and a run_depend tag for "dynamic_reconfigure"
-## * In this file (CMakeLists.txt):
-##   * add "dynamic_reconfigure" to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * uncomment the "generate_dynamic_reconfigure_options" section below
-##     and list every .cfg file to be processed
-
-## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
 
 ###################################
 ## catkin specific configuration ##
@@ -247,15 +227,3 @@ roslint_add_test()
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-#############
-## Testing ##
-#############
-
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_bilbot_hardware.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
-
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)

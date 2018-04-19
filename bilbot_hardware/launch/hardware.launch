@@ -1,6 +1,6 @@
 <launch>
 
-	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" launch-prefix="valgrind --track-origins=yes --leak-check=full">
+	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" launch-prefix="gdb -ex run --args">
 		<remap from="wheel_state" to="wheel_state/right"/>
 	</node>
 

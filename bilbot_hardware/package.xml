@@ -7,7 +7,7 @@
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="karun@todo.todo">karun</maintainer>
+  <maintainer email="kkoppula2@gmail.com">Karun Koppula</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -25,7 +25,7 @@
   <!-- Author tags are optional, multiple are allowed, one per tag -->
   <!-- Authors do not have to be maintainers, but could be -->
   <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="kkoppula2@gmail.com">Karun Koppula</author>
 
 
   <!-- The *depend tags are used to specify dependencies -->
@@ -55,6 +55,7 @@
   <build_depend>sensor_msgs</build_depend>
   <build_depend>bilbot_msgs</build_depend>
   <build_depend>std_msgs</build_depend>
+  
   <build_depend>tf</build_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>roscpp</build_export_depend>
