@@ -1,8 +1,11 @@
 #include "ros/ros.h"
-#include <pigpiod_if2.h>
 #include "bilbot_hardware/motor_controller.hpp"
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
+
+#include <pigpiod_if2.h>
+#include <unistd.h>
+#include <sstream>
 
 using namespace bilbot_hardware;
 
@@ -12,9 +15,9 @@ int main(int argc, char **argv) {
 	ros::NodeHandle n;
 
 	int pinA, pinB, side;
-	n.param("pinA", pinA, "12");
-	n.param("pinB", pinB, "13");
-	n.param("side", side, "0");
+	n.param("pinA", pinA, 12);
+	n.param("pinB", pinB, 13);
+	n.param("side", side, 0);
 
 	//Initialize pigpio library
 	int pi;
