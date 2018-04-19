@@ -40,12 +40,12 @@ int main(int argc, char **argv)
 		wheel.position.resize(1);
 		wheel.velocity.resize(1);
 		wheel.effort.resize(1);
-		
+
 		wheel.header.stamp = ros::Time::now();
 		wheel.header.frame_id = "/world";
 		// // //Publish position and velocity to JointState message
-		wheel.position[0] = 1.0; //dec.getPosition();
-		wheel.velocity[0] = 0.0; //dec.getVelocity();
+		wheel.position[0] = dec.getPosition();
+		wheel.velocity[0] = dec.getVelocity();
 		wheel.effort[0] = 0.0;
 		ROS_INFO("Reached the loop");
 		wheel_state.publish(wheel);
