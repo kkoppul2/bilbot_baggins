@@ -19,7 +19,7 @@ int main(int argc, char **argv)
 
 	int pinA, pinB;
 	std::string wheel_name;
-	n.param<std::string>("wheel_name", wheel_name, "right_wheel_joint")
+	n.param<std::string>("wheel_name", wheel_name, "right_wheel_joint");
 	n.param("pinA", pinA, 7);
 	n.param("pinB", pinB, 8);
 
