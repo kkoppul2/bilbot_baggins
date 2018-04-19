@@ -87,6 +87,7 @@ float re_decoder::getPosition() {
 }
 
 float re_decoder::getVelocity() {
+  filter_velocity();
   return velocity_;
 }
 
