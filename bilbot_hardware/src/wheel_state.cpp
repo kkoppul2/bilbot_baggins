@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 	ROS_INFO("Before publisher init");
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
-	// ros::Rate loop(100);
+	ros::Rate loop(100);
 	// int pi;
 	// ROS_INFO("Before Pigpio init");
 	// if ((pi = pigpio_start(0,0)) < 0) {
