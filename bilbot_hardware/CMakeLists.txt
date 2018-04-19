@@ -63,7 +63,7 @@ add_dependencies(rotary_encoder_node
 #   message_merge_node 
 #   ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
-install(TARGETS motor_controller_node rotary_encoder_node message_merge_node
+install(TARGETS  rotary_encoder_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
