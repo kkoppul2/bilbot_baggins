@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
 
 	ros::NodeHandle n;
 
-	merger m;
+	bilbot_hardware::merger m;
 
 	ros::Subscriber right = n.subscribe("wheel_state/right", 1, merger::rightCallback, &m);
 	ros::Subscriber left = n.subscribe("wheel_state/left", 1, merger::leftCallback, &m);
