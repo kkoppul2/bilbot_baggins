@@ -16,6 +16,13 @@ public:
 	void leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg);
 };
 
+void merger::rightCallback(const sensor_msgs::JointState::ConstPtr& rmsg) {
+	right_wheel = *rmsg;
+}
+
+void merger::leftCallback(const sensor_msgs::JointState::ConstPtr& lmsg) {
+	left_wheel = *lmsg;
+}
 
 }
 
