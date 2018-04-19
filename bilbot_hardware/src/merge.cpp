@@ -34,12 +34,12 @@ int main(int argc, char **argv) {
 		merged_message.position.resize(2);
 		merged_message.velocity.resize(2);
 
-		merged_message.name[0] = right_wheel.name[0];
-		merged_message.name[1] = left_wheel.name[0];
-		merged_message.position[0] = right_wheel.position[0];
-		merged_message.position[1] = left_wheel.position[0];
-		merged_message.velocity[0] = right_wheel.velocity[0];
-		merged_message.velocity[1] = left_wheel.velocity[0];
+		merged_message.name[0] = ""; //right_wheel.name[0];
+		merged_message.name[1] = ""; //left_wheel.name[0];
+		merged_message.position[0] = 0.0; //right_wheel.position[0];
+		merged_message.position[1] = 0.0; //left_wheel.position[0];
+		merged_message.velocity[0] = 0.0; //right_wheel.velocity[0];
+		merged_message.velocity[1] = 0.0; //left_wheel.velocity[0];
 
 		merged.publish(merged_message);
 
