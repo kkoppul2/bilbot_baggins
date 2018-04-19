@@ -24,12 +24,12 @@ int main(int argc, char **argv)
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
 	ros::Rate loop(100);
-	// int pi;
-	// ROS_INFO("Before Pigpio init");
-	// if ((pi = pigpio_start(0,0)) < 0) {
-	// 	fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
-	// 	return 1;
-	// }
+	int pi;
+	ROS_INFO("Before Pigpio init");
+	if ((pi = pigpio_start(0,0)) < 0) {
+		fprintf(stderr, "pigpio initialisation failed (%d).\n", pi);
+		return 1;
+	}
 
 	// re_decoder dec(pi, pinA, pinB);
 
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	//release GPIO resources
 	// dec.re_cancel();
 	//end gpio use functionality
-	// pigpio_stop(pi);
+	pigpio_stop(pi);
 
 	return 0;
 }
