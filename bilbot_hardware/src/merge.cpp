@@ -28,6 +28,8 @@ int main(int argc, char **argv) {
 		merged_message.position.resize(2);
 		merged_message.velocity.resize(2);
 
+		m.right_wheel.name[0] = "";
+
 		merged_message.name[0] = m.right_wheel.name[0];
 		merged_message.name[1] = ""; //left_wheel.name[0];
 		merged_message.position[0] = 0.0; //right_wheel.position[0];

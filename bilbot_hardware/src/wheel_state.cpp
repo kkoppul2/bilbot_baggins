@@ -42,7 +42,6 @@ int main(int argc, char **argv)
 		wheel.name.resize(1);
 		wheel.position.resize(1);
 		wheel.velocity.resize(1);
-		wheel.effort.resize(1);
 
 		wheel.header.stamp = ros::Time::now();
 		wheel.header.frame_id = "/world";
