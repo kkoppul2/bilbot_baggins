@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
 	int pinA, pinB;
 	std::string wheel_name;
-	nh.getParam<std::string>("wheel_name", wheel_name);
+	nh.getParam("wheel_name", wheel_name);
 	nh.getParam("pinA", pinA);
 	nh.getParam("pinB", pinB);
 
