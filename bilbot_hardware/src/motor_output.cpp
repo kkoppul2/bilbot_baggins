@@ -8,11 +8,19 @@
 #include <unistd.h>
 #include <sstream>
 #include <math.h>
+#include <dynamic_reconfigure/server.h>
+#include <bilbot_hardware/ControllerConfig.h>
 
 using namespace bilbot_hardware;
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "motor_output");
+
+	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig> server;
+  	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig>::CallbackType f;
+
+  	f = boost::bind(&motor_controller::configCallback, _1, _2);
+  	server.setCallback(f);
 
 	ros::NodeHandle n;
 
@@ -30,7 +38,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	//Create motor controller class;
-	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
+	motor_controller mc(pi, side, pinA, pinB);
 
 	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 
