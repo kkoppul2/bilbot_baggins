@@ -32,6 +32,15 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
+	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive". 1, latch = true);
+
+	bilbot_msgs::Drive init_cmd;
+	init_cmd.drivers[0] = 0.0;
+	init_cmd.drivers[1] = 0.0;
+
+	init_cmd_pub.publish(init_cmd);
+
+
 	ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("motor_cmd", 1);
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
