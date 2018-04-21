@@ -19,9 +19,6 @@ int main(int argc, char **argv) {
 	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig> server;
   	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig>::CallbackType f;
 
-  	f = boost::bind(&motor_controller::configCallback, _1, _2);
-  	server.setCallback(f);
-
 	ros::NodeHandle n;
 
 	ros::NodeHandle nh("~");
@@ -39,6 +36,9 @@ int main(int argc, char **argv) {
 	}
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB);
+
+	f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
+  	server.setCallback(f);
 
 	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 
