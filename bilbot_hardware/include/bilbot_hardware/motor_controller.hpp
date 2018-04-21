@@ -4,6 +4,7 @@
 #include "math.h"
 #include <pigpiod_if2.h>
 #include <stdint.h>
+#include <bilbot_hardware/ControllerConfig.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
 #include "sensor_msgs/JointState.h"
