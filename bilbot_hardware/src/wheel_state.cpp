@@ -19,8 +19,8 @@ int main(int argc, char **argv)
 	int pinA, pinB;
 	std::string wheel_name;
 	n.param<std::string>("wheel_name", wheel_name, "right_wheel_joint");
-	n.param("pinA", pinA, 14);
-	n.param("pinB", pinB, 15);
+	n.getParam("pinA", pinA);
+	n.getParam("pinB", pinB);
 
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
