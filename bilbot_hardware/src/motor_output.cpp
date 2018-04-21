@@ -32,7 +32,7 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
-	ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("wheel_state", 1);
+	ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("motor_cmd", 1);
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
@@ -59,15 +59,18 @@ int main(int argc, char **argv) {
 
 		motor_cmd.publish(cmd_out);
 
+		set_PWM_dutycycle(pi, pinA, 0);
+		set_PWM_dutycycle(pi, pinB, 0);
+
 		//Gpio output 
-		if (motor_u >= 0)
-		{
-			set_PWM_dutycycle(pi, pinA, motor_u);
-			set_PWM_dutycycle(pi, pinB, 0);
-		} else {
-			set_PWM_dutycycle(pi, pinA, 0);
-			set_PWM_dutycycle(pi, pinB, fabs(motor_u));
-		}
+		// if (motor_u >= 0)
+		// {
+		// 	set_PWM_dutycycle(pi, pinA, motor_u);
+		// 	set_PWM_dutycycle(pi, pinB, 0);
+		// } else {
+		// 	set_PWM_dutycycle(pi, pinA, 0);
+		// 	set_PWM_dutycycle(pi, pinB, fabs(motor_u));
+		// }
 
 		//Ros Looping
 		ros::spinOnce();
