@@ -2,15 +2,15 @@
 
 	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" >
 		<remap from="wheel_state" to="wheel_state/right"/>
-		<param name="pinA" value="14" />
-		<param name="pinB" value="15" />
-		<param name="wheel_name" value="right_wheel_joint" />
+		<param name="pinA" type="int" value="14" />
+		<param name="pinB" type="int" value="15" />
+		<param name="wheel_name" type="str" value="right_wheel_joint" />
 	</node>
 
 	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="left_wheel" respawn="true" >
 		<remap from="wheel_state" to="wheel_state/left"/>
-		<param name="pinA" value="17" />
-		<param name="pinB" value="27" />
+		<param name="pinA" type="int" value="17" />
+		<param name="pinB" type="int" value="27" />
 		<param name="wheel_name" value="left_wheel_joint" />
 	</node>
 

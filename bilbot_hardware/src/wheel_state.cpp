@@ -16,11 +16,14 @@ int main(int argc, char **argv)
 
 	ros::NodeHandle n;
 
+	ros::NodeHandle nh("~");
+
+
 	int pinA, pinB;
 	std::string wheel_name;
-	n.param<std::string>("wheel_name", wheel_name, "right_wheel_joint");
-	n.getParam("pinA", pinA);
-	n.getParam("pinB", pinB);
+	nh.getParam<std::string>("wheel_name", wheel_name);
+	nh.getParam("pinA", pinA);
+	nh.getParam("pinB", pinB);
 
 	ros::Publisher wheel_state = n.advertise<sensor_msgs::JointState>("wheel_state", 1);
 
