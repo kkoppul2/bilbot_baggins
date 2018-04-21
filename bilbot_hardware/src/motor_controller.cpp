@@ -58,6 +58,10 @@ float motor_controller::control() {
 		err_i_old_ = 0;
 	}
 
+	if (fabs(u) < 40) {
+		u = 0;
+	}
+
 	if (u >= 255) {
 		u = 255;
 		err_i_ = err_i_old_;
