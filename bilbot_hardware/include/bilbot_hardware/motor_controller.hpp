@@ -47,6 +47,7 @@ public:
 
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
+	void configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level);
 
 	void set_error();
 	float control();
