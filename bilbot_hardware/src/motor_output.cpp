@@ -6,6 +6,7 @@
 #include <pigpiod_if2.h>
 #include <unistd.h>
 #include <sstream>
+#include <math.h>
 
 using namespace bilbot_hardware;
 
@@ -54,7 +55,7 @@ int main(int argc, char **argv) {
 			set_PWM_dutycycle(pi, pinB, 0);
 		} else {
 			set_PWM_dutycycle(pi, pinA, 0);
-			set_PWM_dutycycle(pi, pinB, motor_u);
+			set_PWM_dutycycle(pi, pinB, fabs(motor_u));
 		}
 
 		//Ros Looping

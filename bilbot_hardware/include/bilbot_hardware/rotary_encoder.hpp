@@ -10,7 +10,7 @@ class re_decoder
 {
    int mygpioA, mygpioB, levA, levB, lastGpio, lastLevel;
 
-   float resolution_ = 0.00132516393; //Angular resolution per encoder tick
+   float resolution_ = 0.0027939424; //Angular resolution per encoder tick
 
    float position_, position_old_, velocity_, velocity_old1_, velocity_old2_;
 
