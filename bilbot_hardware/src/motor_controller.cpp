@@ -12,8 +12,8 @@ motor_controller::motor_controller(int pi, int side, int gpioA, int gpioB, float
 	set_pull_up_down(pi, gpioA, PI_PUD_DOWN);
 	set_pull_up_down(pi, gpioB, PI_PUD_DOWN);
 
-	set_PWM_frequency(pi, gpioA, 40000);
-	set_PWM_frequency(pi, gpioB, 40000);
+	set_PWM_frequency(pi, gpioA, 320);
+	set_PWM_frequency(pi, gpioB, 320);
 }
 
 motor_controller::~motor_controller() {

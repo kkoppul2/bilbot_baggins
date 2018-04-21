@@ -2,6 +2,7 @@
 #include "bilbot_hardware/motor_controller.hpp"
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
+#include "std_msgs/Float64.h"
 
 #include <pigpiod_if2.h>
 #include <unistd.h>
@@ -15,10 +16,12 @@ int main(int argc, char **argv) {
 
 	ros::NodeHandle n;
 
+	ros::NodeHandle nh("~");
+
 	int pinA, pinB, side;
-	n.param("pinA", pinA, 7);
-	n.param("pinB", pinB, 8);
-	n.param("side", side, 0);
+	nh.getParam("pinA", pinA);
+	nh.getParam("pinB", pinB);
+	nh.getParam("side", side);
 
 	//Initialize pigpio library
 	int pi;
@@ -29,11 +32,15 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB, 1.0, 0.0, 0.0);
 
+	ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("wheel_state", 1);
+
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
 	ros::Subscriber curr = n.subscribe("wheel_state/combined", 10, &motor_controller::stateCallback, &mc);
 
 	float motor_u;
+
+	std_msgs::Float64 cmd_out;
 
 	ros::Rate loop(100);
 
@@ -47,6 +54,10 @@ int main(int argc, char **argv) {
 		
 		//Calculate Motor control signal
 		motor_u = mc.control();
+
+		cmd_out.data = motor_u;
+
+		motor_cmd.publish(cmd_out);
 
 		//Gpio output 
 		if (motor_u >= 0)

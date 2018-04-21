@@ -2,8 +2,8 @@
 
 	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" >
 		<remap from="wheel_state" to="wheel_state/right"/>
-		<param name="pinA" type="int" value="14" />
-		<param name="pinB" type="int" value="15" />
+		<param name="pinA" type="int" value="15" />
+		<param name="pinB" type="int" value="14" />
 		<param name="wheel_name" type="str" value="right_wheel_joint" />
 	</node>
 
@@ -17,15 +17,15 @@
 	<node pkg="bilbot_hardware" type="message_merge_node" name="merger" respawn="true" />
 
 	<!-- <node pkg="bilbot_hardware" type="motor_controller_node" name="right_motor" respawn="true" >
-		<param name="pinA" value="23" />
-		<param name="pinB" value="24" />
-		<param name="side" value="0" />
+		<param name="pinA" type="int" value="23" />
+		<param name="pinB" type="int" value="24" />
+		<param name="side" type="int" value="0" />
 	</node>
 
 	<node pkg="bilbot_hardware" type="motor_controller_node" name="left_motor" respawn="true" >
-		<param name="pinA" value="10" />
-		<param name="pinB" value="9" />
-		<param name="side" value="1" />
+		<param name="pinA" type="int" value="9" />
+		<param name="pinB" type="int" value="10" />
+		<param name="side" type="int" value="1" />
 	</node> -->
 
 </launch>
