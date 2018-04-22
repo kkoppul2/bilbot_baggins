@@ -1,8 +1,8 @@
 #include "ros/ros.h"
 #include <boost/assign.hpp>
 #include "bilbot_hardware/laser.hpp"
-#include "sensor_msgs/Range"
-#include "sensor_msgs/LaserScan"
+#include "sensor_msgs/Range.h"
+#include "sensor_msgs/LaserScan.h"
 
 using namespace bilbot_hardware;
 
