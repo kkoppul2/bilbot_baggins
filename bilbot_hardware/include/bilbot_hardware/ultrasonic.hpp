@@ -39,8 +39,9 @@ private:
 	double timestamp_;
 	double tov_;
 
+	void _callback(unsigned gpio, unsigned level, uint32_t tick);
 
-	static void _callback(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user);
+	static void _callbackEx(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user);
 
 	void read();
 

@@ -3,7 +3,7 @@
 
 namespace bilbot_hardware {
 
-void ultrasonic::_callback(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user) {
+void ultrasonic::_callback(unsigned gpio, unsigned level, uint32_t tick) {
 	int round_trip_micros;
   	float range_m;
   	int tick_diff;
@@ -48,6 +48,11 @@ void ultrasonic::_callback(int pi, unsigned gpio, unsigned level, uint32_t tick,
 			_new_reading = 1;
 		}
 	}
+}
+
+void ultrasonic::_callbackEx(int pi, unsigned gpio, unsigned level, uint32_t tick, void *user) {
+	ultrasonic *mySelf = (ultrasonic *) user;
+	mySelf->_callback(gpio, level, tick);
 }
 
 ultrasonic::ultrasonic(int pi, int gpioTrig, int gpioEcho)
