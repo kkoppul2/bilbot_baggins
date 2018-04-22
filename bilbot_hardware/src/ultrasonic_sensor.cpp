@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 	nh.getParam("Trig", pinA);
 	nh.getParam("Echo", pinB);
 
-	string pub_topic;
+	std::string pub_topic;
 	nh.getParam("topic_name", pub_topic);
 
 	int pi;
