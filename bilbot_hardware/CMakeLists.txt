@@ -50,13 +50,10 @@ add_executable(rotary_encoder_node
  src/wheel_state.cpp
  src/rotary_encoder.cpp
 )
-
 target_link_libraries(rotary_encoder_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-
 add_dependencies(rotary_encoder_node 
   ${catkin_EXPORTED_TARGETS} 
-  bilbot_msgs_gencpp 
-  rotary_encoder_node 
+  bilbot_msgs_gencpp
   ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 add_executable(message_merge_node
@@ -65,8 +62,17 @@ add_executable(message_merge_node
 target_link_libraries(message_merge_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 add_dependencies(message_merge_node 
   ${catkin_EXPORTED_TARGETS}
-  message_merge_node 
-  ${${PROJECT_NAME}_EXPORTED_TARGETS})
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
+
+add_executable(laser_pub_node
+  src/laser.cpp
+)
+target_link_libraries(laser_pub_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(message_merge_node 
+  ${catkin_EXPORTED_TARGETS}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
 
 install(TARGETS message_merge_node rotary_encoder_node motor_controller_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}

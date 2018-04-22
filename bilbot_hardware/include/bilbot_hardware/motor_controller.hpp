@@ -7,7 +7,6 @@
 #include <bilbot_hardware/ControllerConfig.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
-#include "sensor_msgs/JointState.h"
 
 namespace bilbot_hardware {
 

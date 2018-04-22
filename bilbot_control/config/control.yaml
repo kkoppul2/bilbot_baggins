@@ -1,6 +1,6 @@
 bilbot_joint_publisher:
   type: "joint_state_controller/JointStateController"
-  publish_rate: 50
+  publish_rate: 1000
 
 bilbot_diff_controller:
   type        : "diff_drive_controller/DiffDriveController"
