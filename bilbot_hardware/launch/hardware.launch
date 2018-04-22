@@ -1,6 +1,6 @@
 <launch>
 
-	<node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" >
+	<!-- <node pkg="bilbot_hardware" type="rotary_encoder_node" name="right_wheel" respawn="true" >
 		<remap from="wheel_state" to="wheel_state/right"/>
 		<param name="pinA" type="int" value="15" />
 		<param name="pinB" type="int" value="14" />
@@ -32,7 +32,7 @@
 		<param name="Trig" type="int" value="5" />
 		<param name="Echo" type="int" value="6" />
 		<remap from="ultrasonic" to="ultrasonic/right"/>
-	</node>
+	</node> -->
 
 	<node pkg="bilbot_hardware" type="ultrasonic_node" name="middle_ultrasonic" respawn="true" >
 		<param name="Trig" type="int" value="7" />
@@ -40,12 +40,12 @@
 		<remap from="ultrasonic" to="ultrasonic/middle"/>
 	</node>
 
-	<node pkg="bilbot_hardware" type="ultrasonic_node" name="left_ultrasonic" respawn="true" >
+	<!-- <node pkg="bilbot_hardware" type="ultrasonic_node" name="left_ultrasonic" respawn="true" >
 		<param name="Trig" type="int" value="3" />
 		<param name="Echo" type="int" value="4" />
 		<remap from="ultrasonic" to="ultrasonic/left"/>
 	</node>
 
-	<node pkg="bilbot_hardware" type="laser_pub_node" name="laser_publisher" respawn="true" />
+	<node pkg="bilbot_hardware" type="laser_pub_node" name="laser_publisher" respawn="true" /> -->
 
 </launch>

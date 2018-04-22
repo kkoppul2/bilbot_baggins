@@ -54,7 +54,18 @@ target_link_libraries(rotary_encoder_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin
 add_dependencies(rotary_encoder_node 
   ${catkin_EXPORTED_TARGETS} 
   bilbot_msgs_gencpp
-  ${${PROJECT_NAME}_EXPORTED_TARGETS})
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
+
+add_executable(ultrasonic_node
+ src/ultrasonic_sensor.cpp
+ src/ultrasonic.cpp
+)
+target_link_libraries(ultrasonic_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(ultrasonic_node 
+  ${catkin_EXPORTED_TARGETS}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
 
 add_executable(message_merge_node
   src/merge.cpp
