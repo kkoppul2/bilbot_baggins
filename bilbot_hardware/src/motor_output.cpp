@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
 	init_cmd_pub.publish(init_cmd);
 
 
-	ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("motor_cmd", 1);
+	//ros::Publisher motor_cmd = n.advertise<std_msgs::Float64>("motor_cmd", 1);
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
@@ -72,9 +72,9 @@ int main(int argc, char **argv) {
 		//Calculate Motor control signal
 		motor_u = mc.control();
 
-		cmd_out.data = motor_u;
+		// cmd_out.data = motor_u;
 
-		motor_cmd.publish(cmd_out);
+		// motor_cmd.publish(cmd_out);
 
 		// set_PWM_dutycycle(pi, pinA, 0);
 		// set_PWM_dutycycle(pi, pinB, 0);
