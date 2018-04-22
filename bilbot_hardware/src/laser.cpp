@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 	ros::Subscriber middle = n.subscribe("ultrasonic/middle", 1, &laser::msonarCallback, &l);
 	ros::Subscriber right = n.subscribe("ultrasonic/right", 1, &laser::rsonarCallback, &l);
 
-	ros::Publisher laser = n.advertiser<sensor_msgs::LaserScan>("fakelaser", 1);
+	ros::Publisher laser = n.advertise<sensor_msgs::LaserScan>("fakelaser", 1);
 
 	tf::TransformBroadcaster broadcaster;
 
