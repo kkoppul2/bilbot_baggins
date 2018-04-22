@@ -15,7 +15,7 @@ void ultrasonic::_callback(unsigned gpio, unsigned level, uint32_t tick) {
 	}
 	else if (level == 1) {
 		if (_got_trig) {
-			tick_diff = tick - self->_trig_tick;
+			tick_diff = tick - _trig_tick;
 
 			if (tick_diff > 100) {
 				_got_echo = 1;
@@ -35,7 +35,7 @@ void ultrasonic::_callback(unsigned gpio, unsigned level, uint32_t tick) {
 
 			if ((min_dist_ <= range_m) && (range_m <= max_dist_))
 			{
-            	tov_ = timestamp;
+            	tov_ = timestamp_;
             	range_ = range_m;
             	round_trip_micros_ = round_trip_micros;
             	status_ = SRTE_GOOD;
@@ -61,8 +61,8 @@ ultrasonic::ultrasonic(int pi, int gpioTrig, int gpioEcho)
 	set_mode(pi_, trig_, PI_OUTPUT);
 	set_mode(pi_, echo_, PI_INPUT);
 
-	callback_trig_id_ = callback_ex(pi_, trig_, FALLING_EDGE, _callback, this);
-	callback_echo_id_ = callback_ex(pi_, echo_, EITHER_EDGE, _callback, this);
+	callback_trig_id_ = callback_ex(pi_, trig_, FALLING_EDGE, _callbackEx, this);
+	callback_echo_id_ = callback_ex(pi_, echo_, EITHER_EDGE, _callbackEx, this);
 }
 
 ultrasonic::~ultrasonic() {

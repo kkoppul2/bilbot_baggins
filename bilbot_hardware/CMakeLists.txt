@@ -85,11 +85,11 @@ add_dependencies(message_merge_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-install(TARGETS message_merge_node rotary_encoder_node motor_controller_node
+install(TARGETS message_merge_node rotary_encoder_node motor_controller_node ultrasonic_node laser_pub_node
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch 
+install(DIRECTORY launch config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
