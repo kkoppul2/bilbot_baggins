@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 
 	ros::Publisher sensor_output = n.advertise<sensor_msgs::Range>("ultrasonic", 1);
 
-	ros::Rate loop(100);
+	ros::Rate loop(10);
 
 	while(ros::ok()) {
 

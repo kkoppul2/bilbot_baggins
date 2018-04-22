@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
 	tf::TransformBroadcaster broadcaster;
 
-	ros::Rate loop(100);
+	ros::Rate loop(10);
 
 	float offset = 1.0;
 
