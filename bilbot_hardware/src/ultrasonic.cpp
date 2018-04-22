@@ -68,11 +68,11 @@ ultrasonic::~ultrasonic() {
 void ultrasonic::read() {
 	_new_reading = 0;
 
-	gpio_trigger(pi, trig, 11, 1);
+	gpio_trigger(pi_, trig_, 11, 1);
 
 	timestamp_ = time_time();
 
-	for (i=0; i<25; i++) {
+	for (int i=0; i<25; i++) {
 		time_sleep(0.01);
 		if (_new_reading) break;
 	}
@@ -87,7 +87,7 @@ void ultrasonic::read() {
 float ultrasonic::getRange() {
 
 	float num_readings = 5;
-	float readings[num_readings]
+	float readings[num_readings];
 	for (int i = 0; i < num_readings; ++i) {
 		read();
 		readings[i] = range_;
@@ -97,4 +97,6 @@ float ultrasonic::getRange() {
 	 	sum += readings[i];
 	}
 	return sum/num_readings;
+}
+
 }
