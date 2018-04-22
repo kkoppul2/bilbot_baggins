@@ -76,16 +76,16 @@ add_dependencies(message_merge_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-# add_executable(laser_pub_node
-#   src/laser.cpp
-# )
-# target_link_libraries(laser_pub_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-# add_dependencies(message_merge_node 
-#   ${catkin_EXPORTED_TARGETS}
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-# )
+add_executable(laser_pub_node
+  src/laser.cpp
+)
+target_link_libraries(laser_pub_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(message_merge_node 
+  ${catkin_EXPORTED_TARGETS}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
 
-install(TARGETS message_merge_node rotary_encoder_node motor_controller_node #ultrasonic_node laser_pub_node
+install(TARGETS message_merge_node rotary_encoder_node motor_controller_node laser_pub_node #ultrasonic_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
