@@ -57,15 +57,15 @@ add_dependencies(rotary_encoder_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-# add_executable(ultrasonic_node
-#  src/ultrasonic_sensor.cpp
-#  src/ultrasonic.cpp
-# )
-# target_link_libraries(ultrasonic_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-# add_dependencies(ultrasonic_node 
-#   ${catkin_EXPORTED_TARGETS}
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-# )
+add_executable(ultrasonic_node
+ src/ultrasonic_sensor.cpp
+ src/ultrasonic.cpp
+)
+target_link_libraries(ultrasonic_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(ultrasonic_node 
+  ${catkin_EXPORTED_TARGETS}
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
 
 add_executable(message_merge_node
   src/merge.cpp
@@ -85,7 +85,7 @@ add_dependencies(laser_pub_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-install(TARGETS laser_pub_node message_merge_node rotary_encoder_node motor_controller_node  #ultrasonic_node 
+install(TARGETS laser_pub_node message_merge_node rotary_encoder_node motor_controller_node  ultrasonic_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
