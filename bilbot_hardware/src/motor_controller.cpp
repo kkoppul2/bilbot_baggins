@@ -59,7 +59,7 @@ float motor_controller::control() {
 		err_i_old_ = 0;
 	}
 
-	if (fabs(u) < 40) {
+	if (fabs(u) < 45) {
 		u = 0;
 	}
 
