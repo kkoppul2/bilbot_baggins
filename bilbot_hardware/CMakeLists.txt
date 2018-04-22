@@ -85,7 +85,7 @@ add_dependencies(laser_pub_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-install(TARGETS laser_pub_node message_merge_node rotary_encoder_node motor_controller_node  ultrasonic_node 
+install(TARGETS laser_pub_node message_merge_node rotary_encoder_node motor_controller_node ultrasonic_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
