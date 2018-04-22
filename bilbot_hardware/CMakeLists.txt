@@ -80,7 +80,7 @@ add_executable(laser_pub_node
   src/laser.cpp
 )
 target_link_libraries(laser_pub_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(message_merge_node 
+add_dependencies(laser_pub_node 
   ${catkin_EXPORTED_TARGETS}
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
