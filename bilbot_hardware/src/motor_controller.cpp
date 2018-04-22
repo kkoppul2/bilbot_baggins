@@ -51,7 +51,7 @@ void motor_controller::estimate_integral() {
 
 float motor_controller::control() {
 	float u = kp_*error_ + kd_*err_d_;
-	if (fabs(error_ < integral_threshold)) {
+	if (fabs(error_ < integral_threshold_)) {
 		estimate_integral();
 		u = u +ki_*err_i_;
 	} else {
@@ -59,8 +59,10 @@ float motor_controller::control() {
 		err_i_old_ = 0;
 	}
 
-	if (fabs(u) < 40) {
-		u = 0;
+	if (u > 0 && u < 40) {
+		u = 40;
+	} else if (u < 0 && u > -40) {
+		u = -40;
 	}
 
 	if (u >= 255) {
@@ -86,6 +88,7 @@ void motor_controller::configCallback(bilbot_hardware::ControllerConfig &config,
 	kp_ = config.kp;
 	kd_ = config.kd;
 	ki_ = config.ki;
+	integral_threshold_ = config.integral_threshold;
 }
 
 

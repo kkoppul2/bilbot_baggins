@@ -24,7 +24,7 @@ private:
 
 	//Integral Variables
 	float err_i_, err_i_old_;
-	float integral_threshold = 1.0;
+	float integral_threshold_;
 
 	//Gpio pins
 	int gpioA, gpioB;
