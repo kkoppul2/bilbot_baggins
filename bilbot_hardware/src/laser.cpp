@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 	while (ros::ok()) {
 		//Publish tf transform between "laser" and base
 		broadcaster.sendTransform(tf::StampedTransform(
-			tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(x, 0.0, z)), 
+			tf::Transform(tf::Quaternion(0, 0, 0, 1), tf::Vector3(0.01, 0.0, 0.088)), 
 			ros::Time::now(), "base_link", "laser"));
 
 		//Publish laser message as aggregate of ultrasonic sensors
@@ -46,9 +46,9 @@ int main(int argc, char** argv) {
 
 		scan.ranges.resize(3);
 
-		scan.ranges[0] = l.right_sensor.range + offset;
-		scan.ranges[1] = l.middle_sensor.range + offset;
-		scan.ranges[2] = l.left_sensor.range + offset;
+		scan.ranges[0] = l.right_sensor.range + 0.13;
+		scan.ranges[1] = l.middle_sensor.range + 0.13;
+		scan.ranges[2] = l.left_sensor.range + 0.13;
 
 		laser.publish(scan);
 
