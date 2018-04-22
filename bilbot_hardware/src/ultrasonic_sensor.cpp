@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 		out.header.stamp = ros::Time::now();
 		out.header.frame_id = "/ultrasonic";
 
-		out.radiation_type = ULTRASOUND;
+		out.radiation_type = 0;
 		out.field_of_view = 0.261799;
 		out.min_range = 0.02;
 		out.max_range = 4.5;
