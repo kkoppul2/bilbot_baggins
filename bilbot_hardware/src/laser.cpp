@@ -3,6 +3,7 @@
 #include "bilbot_hardware/laser.hpp"
 #include "sensor_msgs/Range.h"
 #include "sensor_msgs/LaserScan.h"
+#include <tf/transform_broadcaster.h>
 
 using namespace bilbot_hardware;
 

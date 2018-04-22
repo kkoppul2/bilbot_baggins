@@ -91,7 +91,7 @@ void ultrasonic::read() {
 
 float ultrasonic::getRange() {
 
-	float num_readings = 5;
+	int num_readings = 5;
 	float readings[num_readings];
 	for (int i = 0; i < num_readings; ++i) {
 		read();
@@ -101,7 +101,7 @@ float ultrasonic::getRange() {
 	for (int i = 0; i < num_readings; ++i) {
 	 	sum += readings[i];
 	}
-	return sum/num_readings;
+	return sum/(float)num_readings;
 }
 
 }
