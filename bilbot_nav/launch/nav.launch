@@ -1,0 +1,23 @@
+<launch>
+	<!-- <arg name="map_file" default="$(find bilbot_nav)/maps/map.yaml"/>
+  	<node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+  	</node> -->
+
+  	<!-- <include file="$(find bilbot_nav)/launch/amcl.launch" /> -->
+
+  	<arg name="cmd_vel_topic" default="bilbot_diff_controller/cmd_vel" />
+	<arg name="odom_topic" default="bilbot_diff_controller/odom" />
+  	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    	<rosparam file="$(find bilbot_nav)/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    	<rosparam file="$(find bilbot_nav)/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    	<rosparam file="$(find bilbot_nav)/local_costmap_params.yaml" command="load" />
+    	<rosparam file="$(find bilbot_nav)/global_costmap_params.yaml" command="load" />
+    	<rosparam file="$(find bilbot_nav)/base_local_planner_params.yaml" command="load" />
+
+    	<remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+		<remap from="odom" to="$(arg odom_topic)"/>
+	</node>
+
+	<node pkg="bilbot_nav" type="action_pub_node" respawn="true" name="action_publisher" />
+
+</launch>
