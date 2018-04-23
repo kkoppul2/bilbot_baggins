@@ -28,9 +28,9 @@ find_library(REALTIME_LIB rt /usr/lib/arm-linux-gnueabihf/)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
-generate_dynamic_reconfigure_options(
-  cfg/controller.cfg
-)
+# generate_dynamic_reconfigure_options(
+#   cfg/controller.cfg
+# )
 
 catkin_package()
 
