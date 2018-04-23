@@ -5,6 +5,8 @@
 #include "geometry_msgs/PoseStamped.h"
 #include "std_msgs/Bool.h"
 
+#include <tf/transform_broadcaster.h>
+
 using namespace bilbot_nav;
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
@@ -13,6 +15,9 @@ int main(int argc, char** argv){
   ros::init(argc, argv, "simple_navigation_goals");
 
   ros::NodeHandle n;
+
+  tf::TransformBroadcaster br;
+  tf::Transform transform;
 
   //tell the action client that we want to spin a thread by default
   MoveBaseClient ac("move_base", true);
@@ -31,6 +36,10 @@ int main(int argc, char** argv){
   ros::Rate loop(2);
 
   while (ros::ok()) {
+    transform.setOrigin( tf::Vector3(0.0, 0.0, 0.0) );
+    transform.setRotation( tf::Quaternion(0, 0, 0, 1) );
+    br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "map", "odom"));
+
     move_base_msgs::MoveBaseGoal goal;
     goal.target_pose = nav.goal_;
 
