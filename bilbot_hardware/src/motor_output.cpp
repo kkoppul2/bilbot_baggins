@@ -16,8 +16,8 @@ using namespace bilbot_hardware;
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "motor_output");
 
-	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig> server;
-  	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig>::CallbackType f;
+	// dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig> server;
+ //  	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig>::CallbackType f;
 
 	ros::NodeHandle n;
 
@@ -37,8 +37,8 @@ int main(int argc, char **argv) {
 	//Create motor controller class;
 	motor_controller mc(pi, side, pinA, pinB);
 
-	f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
-  	server.setCallback(f);
+	// f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
+ //  	server.setCallback(f);
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 

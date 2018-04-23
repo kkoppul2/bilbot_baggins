@@ -13,7 +13,9 @@ namespace bilbot_hardware {
 class motor_controller
 {
 private:
-	float kp_, kd_, ki_; //controller gains
+	float kp_ = 32.0;
+	float kd_ = 12;
+	float ki_ 30; //controller gains
 
 	//Error
 	float error_, error_old_;
