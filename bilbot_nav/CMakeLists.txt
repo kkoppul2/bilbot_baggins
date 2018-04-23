@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   move_base_msgs
   roscpp
   sensor_msgs
+  tf
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
