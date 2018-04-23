@@ -14,8 +14,8 @@ class motor_controller
 {
 private:
 	float kp_ = 32.0;
-	float kd_ = 12;
-	float ki_ 30; //controller gains
+	float kd_ = 12.0;
+	float ki_ = 30.0; //controller gains
 
 	//Error
 	float error_, error_old_;
