@@ -40,14 +40,6 @@ int main(int argc, char **argv) {
 	f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
   	server.setCallback(f);
 
-	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
-
-	bilbot_msgs::Drive init_cmd;
-	init_cmd.drivers[0] = 0.0;
-	init_cmd.drivers[1] = 0.0;
-
-	init_cmd_pub.publish(init_cmd);
-
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
 	ros::Subscriber curr = n.subscribe("wheel_state/combined", 10, &motor_controller::stateCallback, &mc);

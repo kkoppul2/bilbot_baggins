@@ -5,12 +5,15 @@
 
   	<!-- <include file="$(find bilbot_nav)/launch/amcl.launch" /> -->
 
+  <include file ="$(find bilbot_drive)/launch/drive.launch" />
+
   <arg name="cmd_vel_topic" default="bilbot_diff_controller/cmd_vel" />
 	<arg name="odom_topic" default="bilbot_diff_controller/odom" />
 
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-
+      <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+      
     	<rosparam file="$(find bilbot_nav)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
     	<rosparam file="$(find bilbot_nav)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
     	<rosparam file="$(find bilbot_nav)/param/local_costmap_params.yaml" command="load" />
