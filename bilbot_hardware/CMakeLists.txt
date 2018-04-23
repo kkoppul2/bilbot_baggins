@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   bilbot_msgs
   std_msgs
   realtime_tools
-  dynamic_reconfigure
+  # dynamic_reconfigure
   tf
 )
 
@@ -43,7 +43,7 @@ add_dependencies(motor_controller_node
   ${catkin_EXPORTED_TARGETS} 
   bilbot_msgs_gencpp 
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  ${PROJECT_NAME}_gencfg
+  # ${PROJECT_NAME}_gencfg
 )
 
 add_executable(rotary_encoder_node
@@ -89,7 +89,7 @@ install(TARGETS laser_pub_node message_merge_node rotary_encoder_node motor_cont
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
-install(DIRECTORY launch config
+install(DIRECTORY launch #config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

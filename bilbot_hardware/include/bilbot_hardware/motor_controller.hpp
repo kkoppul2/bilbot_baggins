@@ -4,7 +4,7 @@
 #include "math.h"
 #include <pigpiod_if2.h>
 #include <stdint.h>
-#include <bilbot_hardware/ControllerConfig.h>
+// #include <bilbot_hardware/ControllerConfig.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
 
@@ -48,7 +48,7 @@ public:
 
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
-	void configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level);
+	// void configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level);
 
 	void set_error();
 	float control();
