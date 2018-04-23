@@ -4,7 +4,6 @@
 #include "math.h"
 #include <pigpiod_if2.h>
 #include <stdint.h>
-// #include <bilbot_hardware/ControllerConfig.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
 
@@ -25,7 +24,7 @@ private:
 
 	//Integral Variables
 	float err_i_, err_i_old_;
-	float integral_threshold_;
+	float integral_threshold_ = 3.0;
 
 	//Gpio pins
 	int gpioA, gpioB;
@@ -48,7 +47,6 @@ public:
 
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
-	// void configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level);
 
 	void set_error();
 	float control();

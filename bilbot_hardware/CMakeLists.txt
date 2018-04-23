@@ -30,16 +30,15 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 catkin_package()
 
 
-# add_executable(motor_controller_node
-#   src/motor_output.cpp
-#   src/motor_controller.cpp)
-# target_link_libraries(motor_controller_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-# add_dependencies(motor_controller_node 
-#   ${catkin_EXPORTED_TARGETS} 
-#   bilbot_msgs_gencpp 
-#   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-#   # ${PROJECT_NAME}_gencfg
-# )
+add_executable(motor_controller_node
+  src/motor_output.cpp
+  src/motor_controller.cpp)
+target_link_libraries(motor_controller_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+add_dependencies(motor_controller_node 
+  ${catkin_EXPORTED_TARGETS} 
+  bilbot_msgs_gencpp 
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+)
 
 add_executable(rotary_encoder_node
  src/wheel_state.cpp
@@ -80,7 +79,7 @@ add_dependencies(laser_pub_node
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
-install(TARGETS laser_pub_node message_merge_node rotary_encoder_node ultrasonic_node #motor_controller_node 
+install(TARGETS laser_pub_node message_merge_node rotary_encoder_node ultrasonic_node motor_controller_node 
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
