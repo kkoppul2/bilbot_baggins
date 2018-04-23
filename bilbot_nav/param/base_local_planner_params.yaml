@@ -9,11 +9,15 @@ TrajectoryPlannerROS:
   acc_lim_y: 1.0
 
   holonomic_robot: false
+  dwa: true
 
-  xy_goal_tolerance: 0.02
+  xy_goal_tolerance: 0.03
   yaw_goal_tolerance: 0.05
 
   sim_time: 0.8
-  vx_samples: 18
+  vx_samples: 5
   vtheta_samples: 20
-  sim_granularity: 0.05
+  sim_granularity: 0.025
+
+  meter_scoring: true
+  publish_cost_grid_pc: true
