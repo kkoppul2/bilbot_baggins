@@ -1,4 +1,4 @@
-##ifndef NAV_GOALS_H_
+#ifndef NAV_GOALS_H_
 #define NAV_GOALS_H_
 
 #include "ros/ros.h"
