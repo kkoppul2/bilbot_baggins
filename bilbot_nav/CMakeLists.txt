@@ -40,5 +40,3 @@ install(DIRECTORY launch param
 )
 
 roslaunch_add_file_check(launch/nav.launch)
-roslint_cpp()
-roslint_add_test()
