@@ -22,7 +22,7 @@
 		<param name="side" type="int" value="0" />
 	</node>
 
-<!-- 	<node pkg="bilbot_hardware" type="motor_controller_node" name="left_motor" respawn="true" >
+	<node pkg="bilbot_hardware" type="motor_controller_node" name="left_motor" respawn="true" >
 		<param name="pinA" type="int" value="9" />
 		<param name="pinB" type="int" value="10" />
 		<param name="side" type="int" value="1" />
@@ -46,6 +46,6 @@
 		<remap from="ultrasonic" to="ultrasonic/left"/>
 	</node>
 
-	<node pkg="bilbot_hardware" type="laser_pub_node" name="laser_publisher" respawn="true" /> -->
+	<node pkg="bilbot_hardware" type="laser_pub_node" name="laser_publisher" respawn="true" />
 
 </launch>
