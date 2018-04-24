@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
-	ros::Subscriber curr = n.subscribe("wheel_state/combined", 10, &motor_controller::stateCallback, &mc);
+	ros::Subscriber curr = n.subscribe("wheel_state/right", 10, &motor_controller::stateCallback, &mc);
 
 	float motor_u;
 
