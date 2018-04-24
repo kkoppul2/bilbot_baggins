@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   bilbot_msgs
   std_msgs
   realtime_tools
+  dynamic_reconfigure
   tf
 )
 
@@ -26,6 +27,10 @@ find_library(PIGPIO_LIB pigpiod_if2 /usr/lib/)
 find_library(REALTIME_LIB rt /usr/lib/arm-linux-gnueabihf/)
 
 include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+
+generate_dynamic_reconfigure_options(
+  cfg/Controller.cfg
+)
 
 catkin_package()
 
@@ -37,6 +42,7 @@ target_link_libraries(motor_controller_node ${REALTIME_LIB} ${PIGPIO_LIB} ${catk
 add_dependencies(motor_controller_node 
   ${catkin_EXPORTED_TARGETS} 
   bilbot_msgs_gencpp 
+  ${PROJECT_NAME}_gencfg
   ${${PROJECT_NAME}_EXPORTED_TARGETS}
 )
 
