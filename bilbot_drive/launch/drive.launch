@@ -6,6 +6,6 @@
 
 	<node pkg="bilbot_drive" type="bilbot_drive_node" name="bilbot_interface" respawn="true" />
 
-	<node pkg="bilbot_drive" type="simple_controller" name="simple_controller" respawn="true" />
+	<!-- <node pkg="bilbot_drive" type="simple_controller" name="simple_controller" respawn="true" /> -->
 
 </launch>
