@@ -3,6 +3,7 @@
 #include "geometry_msgs/Twist.h"
 #include "nav_msgs/Odometry.h"
 #include <bilbot_drive/Pos_ControllerConfig.h>
+#include "bilbot_drive/control_law.hpp"
 #include <dynamic_reconfigure/server.h>
 #include "math.h"
 #include <tf/transform_datatypes.h>
