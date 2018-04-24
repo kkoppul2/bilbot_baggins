@@ -33,6 +33,8 @@ int main(int argc, char** argv){
 
   ros::Publisher action_status_pub = n.advertise<std_msgs::Bool>("action_status", 1);
 
+  ros::Publisher action_taken = n.advertise<geometry_msgs::PoseStamped>("moving_to", 1);
+
   ros::Rate loop(2);
 
   while (ros::ok()) {
@@ -43,6 +45,8 @@ int main(int argc, char** argv){
     move_base_msgs::MoveBaseGoal goal;
     goal.target_pose = nav.goal_;
 
+    geometry_msgs::PoseStamped destination;
+
     ROS_INFO("Sending goal");
     ac.sendGoal(goal);
 
@@ -51,6 +55,8 @@ int main(int argc, char** argv){
     std_msgs::Bool status;
     if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED) {
       status.data = true;
+      destination = nav.goal_;
+      action_taken.publish(destination);
     } else {
       status.data = false;
     }
