@@ -88,3 +88,5 @@ void motor_controller::configCallback(bilbot_hardware::ControllerConfig &config,
 	ki_ = config.ki;
 	integral_threshold_ = config.integral_threshold;
 }
+
+}
