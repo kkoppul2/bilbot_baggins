@@ -52,7 +52,7 @@ int main(int argc, char **argv) {
 	ros::Rate loop(100);
 
 	while(ros::ok()) {
-		std_msgs::Float64> motor_out;
+		std_msgs::Float64 motor_out;
 		//Calculate current error
 		mc.set_error();
 
