@@ -60,15 +60,18 @@ int main(int argc, char **argv) {
 		//Calculate Motor control signal
 		motor_u = mc.control();
 
+		set_PWM_dutycycle(pi, pinA, 0);
+		set_PWM_dutycycle(pi, pinB, 0);
+
 		//Gpio output 
-		if (motor_u >= 0)
-		{
-			set_PWM_dutycycle(pi, pinA, motor_u);
-			set_PWM_dutycycle(pi, pinB, 0);
-		} else {
-			set_PWM_dutycycle(pi, pinA, 0);
-			set_PWM_dutycycle(pi, pinB, fabs(motor_u));
-		}
+		// if (motor_u >= 0)
+		// {
+		// 	set_PWM_dutycycle(pi, pinA, motor_u);
+		// 	set_PWM_dutycycle(pi, pinB, 0);
+		// } else {
+		// 	set_PWM_dutycycle(pi, pinA, 0);
+		// 	set_PWM_dutycycle(pi, pinB, fabs(motor_u));
+		// }
 
 		//Ros Looping
 		ros::spinOnce();
