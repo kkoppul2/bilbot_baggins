@@ -1,6 +1,6 @@
 #include "bilbot_hardware/motor_controller.hpp"
 #include <pigpiod_if2.h>
-// #include <bilbot_hardware/ControllerConfig.h>
+#include <bilbot_hardware/ControllerConfig.h>
 
 namespace bilbot_hardware {
 
@@ -82,4 +82,9 @@ void motor_controller::stateCallback(const sensor_msgs::JointState::ConstPtr& cu
 	set_wheel_vel(wheel_vel_ = curr_vel->velocity[side_]);
 }
 
+void motor_controller::configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level) {
+	kp_ = config.kp;
+	kd_ = config.kd;
+	ki_ = config.ki;
+	integral_threshold_ = config.integral_threshold;
 }

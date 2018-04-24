@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "sensor_msgs/JointState.h"
 #include "bilbot_msgs/Drive.h"
+#include <bilbot_hardware/ControllerConfig.h>
 
 namespace bilbot_hardware {
 
@@ -24,7 +25,7 @@ private:
 
 	//Integral Variables
 	float err_i_, err_i_old_;
-	float integral_threshold_ = 3.0;
+	float integral_threshold_;
 
 	//Gpio pins
 	int gpioA, gpioB;
@@ -47,6 +48,7 @@ public:
 
 	void commandCallback(const bilbot_msgs::Drive::ConstPtr& cmd_vel);
 	void stateCallback(const sensor_msgs::JointState::ConstPtr& curr_vel);
+	void configCallback(bilbot_hardware::ControllerConfig &config, uint32_t level);
 
 	void set_error();
 	float control();

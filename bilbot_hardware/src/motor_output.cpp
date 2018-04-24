@@ -9,6 +9,9 @@
 #include <sstream>
 #include <math.h>
 
+#include <dynamic_reconfigure/server.h>
+#include <bilbot_hardware/ControllerConfig.h>
+
 using namespace bilbot_hardware;
 
 int main(int argc, char **argv) {
@@ -23,6 +26,9 @@ int main(int argc, char **argv) {
 	nh.getParam("pinB", pinB);
 	nh.getParam("side", side);
 
+	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig> server;
+	dynamic_reconfigure::Server<bilbot_hardware::ControllerConfig>::CallbackType f;
+
 	//Initialize pigpio library
 	int pi;
 	if ((pi = pigpio_start(0,0)) < 0) {
@@ -31,6 +37,9 @@ int main(int argc, char **argv) {
 	}
 	//Create motor controller class;
 	motor_controller mc(1.0, 0.0, 0.0, pi, side, pinA, pinB);
+
+	f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
+	server.setCallback(f);
 
 	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 
