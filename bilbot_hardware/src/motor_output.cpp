@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	//Create motor controller class;
-	motor_controller mc(pi, side, pinA, pinB);
+	motor_controller mc(32.0, 12.0, 30.0, pi, side, pinA, pinB);
 
 	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 

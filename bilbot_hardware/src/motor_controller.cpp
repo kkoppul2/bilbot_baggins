@@ -4,8 +4,8 @@
 
 namespace bilbot_hardware {
 
-motor_controller::motor_controller(int pi, int side, int gpioA, int gpioB) 
-	: side_(side)
+motor_controller::motor_controller(float kp, float kd, float ki, int pi, int side, int gpioA, int gpioB) 
+	: kp_(kp), kd_(kd), ki_(ki), side_(side)
 {
 	set_mode(pi, gpioA, PI_OUTPUT);
 	set_mode(pi, gpioB, PI_OUTPUT);

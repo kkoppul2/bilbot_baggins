@@ -12,9 +12,9 @@ namespace bilbot_hardware {
 class motor_controller
 {
 private:
-	float kp_ = 32.0;
-	float kd_ = 12.0;
-	float ki_ = 30.0; //controller gains
+	float kp_;
+	float kd_;
+	float ki_; //controller gains
 
 	//Error
 	float error_, error_old_;
@@ -39,7 +39,7 @@ private:
 
 
 public:
-	motor_controller(int pi, int side, int gpioA, int gpioB);
+	motor_controller(float kp, float kd, float ki, int pi, int side, int gpioA, int gpioB);
 	~motor_controller();
 	
 	void filter_velocity();
