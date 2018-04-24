@@ -8,6 +8,3 @@ global_costmap:
   width: 10.0
   height: 10.0
   resolution: 0.03
-
-  # plugins:
-  #   - {name: static_layer, type: 'costmap_2d::StaticLayer'}
