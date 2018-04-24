@@ -6,6 +6,7 @@
 #include <dynamic_reconfigure/server.h>
 #include "math.h"
 #include "transform_datatypes.h"
+#include "tf.h"
 
 
 using namespace bilbot_drive;
@@ -37,14 +38,8 @@ int main(int argc, char** argv) {
 			pow(c.goal_pose.pose.position.y - c.current_pose.pose.pose.position.y, 2) + 
 			pow(c.goal_pose.pose.position.z - c.current_pose.pose.pose.position.z, 2));
 
-		float goal_yaw, goal_roll, goal_pitch; 
-		float curr_yaw, curr_roll, curr_pitch; 
-
-		tf::Matrix3x3 m(c.goal_pose.pose.orientation);
-		m.getRPY(goal_roll, goal_pitch, goal_yaw);
-
-		tf::Matrix3x3 c(c.current_pose.pose.pose.orientation);
-		c.getRPY(curr_roll, curr_pitch, curr_yaw);
+		float goal_yaw = tf::getYaw(c.goal_pose.pose.orientation);
+		float curr_yaw = tf::getYaw(c.current_pose.pose.pose.orientation);
 
 		c.err_t = goal_yaw - curr_yaw;
 
