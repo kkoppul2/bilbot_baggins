@@ -34,6 +34,8 @@ int main(int argc, char **argv) {
 
 	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 
+	ros::Publisher motor_out_pub = n.advertise<std_msgs::Float64>("motor_commands", 1);
+
 	bilbot_msgs::Drive init_cmd;
  	init_cmd.drivers[0] = 0.0;
  	init_cmd.drivers[1] = 0.0;
@@ -50,6 +52,7 @@ int main(int argc, char **argv) {
 	ros::Rate loop(100);
 
 	while(ros::ok()) {
+		std_msgs::Float64> motor_out;
 		//Calculate current error
 		mc.set_error();
 
@@ -59,6 +62,10 @@ int main(int argc, char **argv) {
 		
 		//Calculate Motor control signal
 		motor_u = mc.control();
+
+		motor_out.data = motor_u;
+
+		motor_out_pub.publish(motor_out);
 
 		set_PWM_dutycycle(pi, pinA, 0);
 		set_PWM_dutycycle(pi, pinB, 0);
