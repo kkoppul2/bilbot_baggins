@@ -63,3 +63,5 @@ int main(int argc, char** argv) {
 		ros::spinOnce();
 		loop.sleep();
 	}
+
+}
