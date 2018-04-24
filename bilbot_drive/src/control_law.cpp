@@ -40,12 +40,12 @@ int main(int argc, char** argv) {
 
 		tf::Quaternion goal(c.goal_pose.pose.orientation.x, c.goal_pose.pose.orientation.y, c.goal_pose.pose.orientation.z, c.goal_pose.pose.orientation.w);
 		tf::Matrix3x3 g(goal);
-		float gr, gp, gy;
+		double gr, gp, gy;
 		g.getRPY(gr, gp, gy);
 
 		tf::Quaternion current(c.current_pose.pose.pose.orientation.x, c.current_pose.pose.pose.orientation.y, c.current_pose.pose.pose.orientation.z, c.current_pose.pose.pose.orientation.w);
 		tf::Matrix3x3 curr(current);
-		float cr, cp, cy;
+		double cr, cp, cy;
 		curr.getRPY(cr, cp, cy);
 		c.err_t = gy - cy;
 
