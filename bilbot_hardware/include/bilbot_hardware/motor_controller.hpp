@@ -40,7 +40,7 @@ private:
 
 
 public:
-	motor_controller(float kp, float kd, float ki, int pi, int side, int gpioA, int gpioB);
+	motor_controller(int pi, int side, int gpioA, int gpioB);
 	~motor_controller();
 	
 	void filter_velocity();

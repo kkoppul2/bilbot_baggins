@@ -36,19 +36,19 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 	//Create motor controller class;
-	motor_controller mc(1.0, 0.0, 0.0, pi, side, pinA, pinB);
+	motor_controller mc(pi, side, pinA, pinB);
 
 	f = boost::bind(&motor_controller::configCallback, &mc, _1, _2);
 	server.setCallback(f);
 
-	ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
+	// ros::Publisher init_cmd_pub = n.advertise<bilbot_msgs::Drive>("cmd_drive", 1, true);
 
 	ros::Publisher motor_out_pub = n.advertise<std_msgs::Float64>("motor_commands", 1);
 
-	bilbot_msgs::Drive init_cmd;
- 	init_cmd.drivers[0] = 0.0;
- 	init_cmd.drivers[1] = 0.0;
- 	init_cmd_pub.publish(init_cmd);
+	// bilbot_msgs::Drive init_cmd;
+ // 	init_cmd.drivers[0] = 0.0;
+ // 	init_cmd.drivers[1] = 0.0;
+ // 	init_cmd_pub.publish(init_cmd);
 
 	ros::Subscriber cmd = n.subscribe("cmd_drive", 10, &motor_controller::commandCallback, &mc);
 
