@@ -5,7 +5,7 @@
 #include <bilbot_drive/Pos_ControllerConfig.h>
 #include <dynamic_reconfigure/server.h>
 #include "math.h"
-#include <tf.h>
+#include <tf/transform_datatypes.h>
 
 
 using namespace bilbot_drive;
@@ -37,10 +37,14 @@ int main(int argc, char** argv) {
 			pow(c.goal_pose.pose.position.y - c.current_pose.pose.pose.position.y, 2) + 
 			pow(c.goal_pose.pose.position.z - c.current_pose.pose.pose.position.z, 2));
 
-		float goal_yaw = tf::getYaw(c.goal_pose.pose.orientation);
-		float curr_yaw = tf::getYaw(c.current_pose.pose.pose.orientation);
+		tf::Matrix3x3 g(c.goal_pose.pose.orientation);
+		float gr, gp, gy;
+		g.getRPY(gr, gp, gy);
 
-		c.err_t = goal_yaw - curr_yaw;
+		tf::Matrix3x3 curr(c.current_pose.pose.pose.orientation);
+		float cr, cp, cy;
+		curr.getRPY(cr, cp, cy);
+		c.err_t = gy - cy;
 
 
 		velocity_commands.linear.x = c.linear();
