@@ -27,12 +27,11 @@ public:
 	void configCallback(bilbot_drive::Pos_ControllerConfig &config, uint32_t level);
 
 	float angular();
-
 	float linear();
 	
 };
 
-void controller::angular() {
+float controller::angular() {
 	return kp*sin(err_t)*cos(err_t)+ ka*err_t;
 }
 

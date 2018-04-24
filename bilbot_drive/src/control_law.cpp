@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
 	controller c;
 
 	ros::Subscriber goal_pose = n.subscribe("goal_position", 1, &controller::goalCallback, &c);
-	ros::Subscriber goal_pose = n.subscribe("bilbot_diff_controller/odom", 1, &controller::currCallback, &c);
+	ros::Subscriber curr_pose = n.subscribe("bilbot_diff_controller/odom", 1, &controller::currCallback, &c);
 
 	ros::Publisher cmd_vel = n.advertise<geometry_msgs::Twist>("bilbot_diff_controller/cmd_vel", 1);
 
@@ -38,11 +38,13 @@ int main(int argc, char** argv) {
 			pow(c.goal_pose.pose.position.y - c.current_pose.pose.pose.position.y, 2) + 
 			pow(c.goal_pose.pose.position.z - c.current_pose.pose.pose.position.z, 2));
 
-		tf::Matrix3x3 g(c.goal_pose.pose.orientation);
+		tf::Quaternion goal(c.goal_pose.pose.orientation.x, c.goal_pose.pose.orientation.y, c.goal_pose.pose.orientation.z, c.goal_pose.pose.orientation.w);
+		tf::Matrix3x3 g(goal);
 		float gr, gp, gy;
 		g.getRPY(gr, gp, gy);
 
-		tf::Matrix3x3 curr(c.current_pose.pose.pose.orientation);
+		tf::Quaternion current(c.current_pose.pose.pose.orientation.x, c.current_pose.pose.pose.orientation.y, c.current_pose.pose.pose.orientation.z, c.current_pose.pose.pose.orientation.w);
+		tf::Matrix3x3 curr(current);
 		float cr, cp, cy;
 		curr.getRPY(cr, cp, cy);
 		c.err_t = gy - cy;
